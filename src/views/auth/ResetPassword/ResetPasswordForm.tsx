@@ -69,14 +69,14 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
             <div className="mb-6">
                 {resetComplete ? (
                     <>
-                        <h3 className="mb-1">Reset done</h3>
-                        <p>Your password has been successfully reset</p>
+                        <h3 className="mb-1">Reset eseguito</h3>
+                        <p>La tua password è stata reimpostata con successo</p>
                     </>
                 ) : (
                     <>
-                        <h3 className="mb-1">Set new password</h3>
+                        <h3 className="mb-1">Inserisci una nuova password</h3>
                         <p>
-                            Your new password must different to previos password
+                            La tua nuova password deve essere diversa dalla precedente
                         </p>
                     </>
                 )}
@@ -152,13 +152,13 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                                     type="button"
                                     onClick={onContinue}
                                 >
-                                    Continue
+                                    Continua
                                 </Button>
                             )}
 
                             <div className="mt-4 text-center">
-                                <span>Back to </span>
-                                <ActionLink to={signInUrl}>Sign in</ActionLink>
+                                <span>Torna alla </span>
+                                <ActionLink to={signInUrl}>Login</ActionLink>
                             </div>
                         </FormContainer>
                     </Form>

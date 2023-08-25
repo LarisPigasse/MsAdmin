@@ -80,6 +80,7 @@ const PageContainer = (props: PageContainerProps) => {
                     )}
                 </div>
             </main>
+            <div className=' bg-gray-50 h-6'>
             {footer && (
                 <Footer
                     pageContainerType={
@@ -87,6 +88,7 @@ const PageContainer = (props: PageContainerProps) => {
                     }
                 />
             )}
+            </div>
         </div>
     )
 }

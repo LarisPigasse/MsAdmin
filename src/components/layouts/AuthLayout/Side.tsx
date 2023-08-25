@@ -20,22 +20,15 @@ const Side = ({ children, content, ...rest }: SideProps) => {
                 <Logo mode="dark" />
                 <div>
                     <div className="mb-6 flex items-center gap-4">
-                        <Avatar
-                            className="border-2 border-white"
-                            shape="circle"
-                            src="/img/avatars/thumb-10.jpg"
-                        />
                         <div className="text-white">
                             <div className="font-semibold text-base">
-                                Brittany Hale
+                                Daniele Di Marzio
                             </div>
-                            <span className="opacity-80">CTO, Onward</span>
+                            <span className="opacity-80">Amministratore</span>
                         </div>
                     </div>
-                    <p className="text-lg text-white opacity-80">
-                        Elstar comes with a complete set of UI components
-                        crafted with Tailwind CSS, it fulfilled most of the use
-                        case to create modern and beautiful UI and application
+                    <p className="text-lg font-bold text-white opacity-80">
+                        Benvenuti in MsAdmin
                     </p>
                 </div>
                 <span className="text-white">

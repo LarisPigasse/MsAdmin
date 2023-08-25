@@ -56,18 +56,16 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
             <div className="mb-6">
                 {emailSent ? (
                     <>
-                        <h3 className="mb-1">Check your email</h3>
+                        <h3 className="mb-1">Controlla la tua email</h3>
                         <p>
-                            We have sent a password recovery instruction to your
-                            email
+                        Abbiamo inviato istruzioni per il recupero della password alla tua e-mail
                         </p>
                     </>
                 ) : (
                     <>
-                        <h3 className="mb-1">Forgot Password</h3>
+                        <h3 className="mb-1">Password dimenticata</h3>
                         <p>
-                            Please enter your email address to receive a
-                            verification code
+                        Inserisci il tuo indirizzo email per ricevere un codice di verifica
                         </p>
                     </>
                 )}
@@ -116,8 +114,8 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                                 {emailSent ? 'Resend Email' : 'Send Email'}
                             </Button>
                             <div className="mt-4 text-center">
-                                <span>Back to </span>
-                                <ActionLink to={signInUrl}>Sign in</ActionLink>
+                                <span>Torna alla </span>
+                                <ActionLink to={signInUrl}>Login</ActionLink>
                             </div>
                         </FormContainer>
                     </Form>
