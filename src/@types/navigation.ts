@@ -5,6 +5,7 @@ export interface NavigationTree {
     title: string
     translateKey: string
     icon: string
+    colore: string
     type: 'title' | 'collapse' | 'item'
     authority: string[]
     subMenu: NavigationTree[]

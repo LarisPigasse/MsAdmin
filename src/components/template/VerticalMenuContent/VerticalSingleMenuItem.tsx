@@ -63,7 +63,7 @@ const DefaultItem = (props: DefaultItemProps) => {
                 >
                     <VerticalMenuIcon icon={nav.icon} />
                     {!sideCollapsed && (
-                        <span>
+                        <span className={`${nav.colore}`}>
                             <Trans
                                 i18nKey={nav.translateKey}
                                 defaults={nav.title}

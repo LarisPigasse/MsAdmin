@@ -32,7 +32,7 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }: DefaultItemProps) => {
                 label={
                     <>
                         <VerticalMenuIcon icon={nav.icon} />
-                        <span>
+                        <span  className={nav.colore}>
                             <Trans
                                 i18nKey={nav.translateKey}
                                 defaults={nav.title}
@@ -64,7 +64,7 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }: DefaultItemProps) => {
                                     }
                                     target={subNav.isExternalLink ? '_blank' :  ''}
                                 >
-                                    <span>
+                                    <span  className={subNav.colore}>
                                         <Trans
                                             i18nKey={subNav.translateKey}
                                             defaults={subNav.title}
