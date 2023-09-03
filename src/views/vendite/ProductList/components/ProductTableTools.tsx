@@ -1,18 +1,18 @@
 import Button from '@/components/ui/Button'
 import { HiDownload, HiPlusCircle } from 'react-icons/hi'
-import ProdottiTableSearch from './ProdottiTableSearch'
-import ProdottiFilter from './ProdottiFilter'
+import ProductTableSearch from './ProductTableSearch'
+import ProductFilter from './ProductFilter'
 import { Link } from 'react-router-dom'
 
-const ProdottiTableTools = () => {
+const ProductTableTools = () => {
     return (
         <div className="flex flex-col lg:flex-row lg:items-center">
-            <ProdottiTableSearch />
-            <ProdottiFilter />
+            <ProductTableSearch />
+            <ProductFilter />
             <Link
                 download
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
-                to="/data/prodotti.csv"
+                to="/data/product-list.csv"
                 target="_blank"
             >
                 <Button block size="sm" icon={<HiDownload />}>
@@ -21,14 +21,14 @@ const ProdottiTableTools = () => {
             </Link>
             <Link
                 className="block lg:inline-block md:mb-0 mb-4"
-                to="/app/vednite/Prodotti-new"
+                to="/app/sales/product-new"
             >
                 <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
-                    Aggiungi un prodotto
+                    Add Product
                 </Button>
             </Link>
         </div>
     )
 }
 
-export default ProdottiTableTools
+export default ProductTableTools

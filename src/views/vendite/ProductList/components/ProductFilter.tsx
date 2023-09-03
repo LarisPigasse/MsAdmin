@@ -1,7 +1,7 @@
 import { useState, useRef, forwardRef } from 'react'
 import { HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
 import {
-    getProdotti,
+    getProducts,
     setFilterData,
     initialTableData,
     useAppDispatch,
@@ -37,13 +37,13 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.venditeProdotti.data.filterData
+            (state) => state.salesProductList.data.filterData
         )
 
         const handleSubmit = (values: FormModel) => {
             onSubmitComplete?.()
             dispatch(setFilterData(values))
-            dispatch(getProdotti(initialTableData))
+            dispatch(getProducts(initialTableData))
         }
 
         return (
@@ -223,7 +223,7 @@ const DrawerFooter = ({ onSaveClick, onCancel }: DrawerFooterProps) => {
     )
 }
 
-const ProdottiFilter = () => {
+const ProductFilter = () => {
     const formikRef = useRef<FormikProps<FormModel>>(null)
 
     const [isOpen, setIsOpen] = useState(false)
@@ -270,4 +270,4 @@ const ProdottiFilter = () => {
 
 FilterForm.displayName = 'FilterForm'
 
-export default ProdottiFilter
+export default ProductFilter

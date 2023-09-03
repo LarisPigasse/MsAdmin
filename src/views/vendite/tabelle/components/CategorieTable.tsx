@@ -241,7 +241,7 @@ function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<
 const renderSubComponent = ({ row }: { row: Row<Categoria> }) => {
     return (
         <pre style={{ fontSize: '10px' }}>
-            <code>{JSON.stringify(row.original, null, 2)}</code>
+            <code>{JSON.stringify(row.original.subRows, null, 2)}</code>
         </pre>
     )
 }

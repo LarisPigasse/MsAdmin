@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetVenditeProdotti,
-    apiDeleteVenditeProdotti,
+    apiGetSalesProducts,
+    apiDeleteSalesProducts,
 } from '@/services/VenditeService'
 import type { TableQueries } from '@/@types/common'
 
-type Prodotto = {
+type Product = {
     id: string
     name: string
     productCode: string
@@ -16,10 +16,10 @@ type Prodotto = {
     status: number
 }
 
-type Prodotti = Prodotto[]
+type Products = Product[]
 
-type GetVenditeProdottiResponse = {
-    data: Prodotti
+type GetSalesProductsResponse = {
+    data: Products
     total: number
 }
 
@@ -30,32 +30,32 @@ type FilterQueries = {
     productStatus: number
 }
 
-export type VenditeProdottiState = {
+export type SalesProductListState = {
     loading: boolean
     deleteConfirmation: boolean
-    selectedProdotto: string
+    selectedProduct: string
     tableData: TableQueries
     filterData: FilterQueries
-    prodotti: Prodotto[]
+    productList: Product[]
 }
 
-type GetVenditeProdottiRequest = TableQueries & { filterData?: FilterQueries }
+type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
 
-export const SLICE_NAME = 'venditeProdotti'
+export const SLICE_NAME = 'salesProductList'
 
-export const getProdotti = createAsyncThunk(
-    SLICE_NAME + '/getProdotti',
-    async (data: GetVenditeProdottiRequest) => {
-        const response = await apiGetVenditeProdotti<
-            GetVenditeProdottiResponse,
-            GetVenditeProdottiRequest
+export const getProducts = createAsyncThunk(
+    SLICE_NAME + '/getProducts',
+    async (data: GetSalesProductsRequest) => {
+        const response = await apiGetSalesProducts<
+            GetSalesProductsResponse,
+            GetSalesProductsRequest
         >(data)
         return response.data
     }
 )
 
-export const deleteProdotti = async (data: { id: string | string[] }) => {
-    const response = await apiDeleteVenditeProdotti<
+export const deleteProduct = async (data: { id: string | string[] }) => {
+    const response = await apiDeleteSalesProducts<
         boolean,
         { id: string | string[] }
     >(data)
@@ -73,11 +73,11 @@ export const initialTableData: TableQueries = {
     },
 }
 
-const initialState: VenditeProdottiState = {
+const initialState: SalesProductListState = {
     loading: false,
     deleteConfirmation: false,
-    selectedProdotto: '',
-    prodotti: [],
+    selectedProduct: '',
+    productList: [],
     tableData: initialTableData,
     filterData: {
         name: '',
@@ -87,12 +87,12 @@ const initialState: VenditeProdottiState = {
     },
 }
 
-const prodottiSlice = createSlice({
+const productListSlice = createSlice({
     name: `${SLICE_NAME}/state`,
     initialState,
     reducers: {
-        updateProdotti: (state, action) => {
-            state.prodotti = action.payload
+        updateProductList: (state, action) => {
+            state.productList = action.payload
         },
         setTableData: (state, action) => {
             state.tableData = action.payload
@@ -103,29 +103,29 @@ const prodottiSlice = createSlice({
         toggleDeleteConfirmation: (state, action) => {
             state.deleteConfirmation = action.payload
         },
-        setSelectedProdotto: (state, action) => {
-            state.selectedProdotto = action.payload
+        setSelectedProduct: (state, action) => {
+            state.selectedProduct = action.payload
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getProdotti.fulfilled, (state, action) => {
-                state.prodotti = action.payload.data
+            .addCase(getProducts.fulfilled, (state, action) => {
+                state.productList = action.payload.data
                 state.tableData.total = action.payload.total
                 state.loading = false
             })
-            .addCase(getProdotti.pending, (state) => {
+            .addCase(getProducts.pending, (state) => {
                 state.loading = true
             })
     },
 })
 
 export const {
-    updateProdotti,
+    updateProductList,
     setTableData,
     setFilterData,
     toggleDeleteConfirmation,
-    setSelectedProdotto,
-} = prodottiSlice.actions
+    setSelectedProduct,
+} = productListSlice.actions
 
-export default prodottiSlice.reducer
+export default productListSlice.reducer

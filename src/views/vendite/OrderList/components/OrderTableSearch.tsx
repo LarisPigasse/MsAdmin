@@ -2,23 +2,23 @@ import { useRef } from 'react'
 import Input from '@/components/ui/Input'
 import { HiOutlineSearch } from 'react-icons/hi'
 import {
-    getProdotti,
+    getOrders,
     setTableData,
-    useAppSelector,
     useAppDispatch,
+    useAppSelector,
 } from '../store'
 import debounce from 'lodash/debounce'
 import cloneDeep from 'lodash/cloneDeep'
 import type { TableQueries } from '@/@types/common'
 import type { ChangeEvent } from 'react'
 
-const ProdottiTableSearch = () => {
+const OrderTableSearch = () => {
     const dispatch = useAppDispatch()
 
-    const searchInput = useRef(null)
+    const searchInput = useRef<HTMLInputElement>(null)
 
     const tableData = useAppSelector(
-        (state) => state.venditeProdotti.data.tableData
+        (state) => state.salesOrderList.data.tableData
     )
 
     const debounceFn = debounce(handleDebounceFn, 500)
@@ -38,7 +38,7 @@ const ProdottiTableSearch = () => {
 
     const fetchData = (data: TableQueries) => {
         dispatch(setTableData(data))
-        dispatch(getProdotti(data))
+        dispatch(getOrders(data))
     }
 
     const onEdit = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,13 +48,13 @@ const ProdottiTableSearch = () => {
     return (
         <Input
             ref={searchInput}
-            className="max-w-md md:w-52 md:mb-0 mb-4"
+            className="lg:w-52"
             size="sm"
-            placeholder="Cerca prodotto"
+            placeholder="Search"
             prefix={<HiOutlineSearch className="text-lg" />}
             onChange={onEdit}
         />
     )
 }
 
-export default ProdottiTableSearch
+export default OrderTableSearch

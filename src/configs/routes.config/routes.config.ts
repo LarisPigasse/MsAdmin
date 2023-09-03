@@ -79,14 +79,14 @@ export const protectedRoutes = [
     },
     {
         key: 'vendite.ordini',
-        path: '/vendite/ordini/',
-        component: lazy(() => import('@/views/vendite/ordini')),
+        path: '/vendite/OrderList/',
+        component: lazy(() => import('@/views/vendite/OrderList')),
         authority: [],
     },
     {
         key: 'vendite.prodotti',
-        path: '/vendite/prodotti/',
-        component: lazy(() => import('@/views/vendite/prodotti')),
+        path: '/vendite/ProductList/',
+        component: lazy(() => import('@/views/vendite/ProductList')),
         authority: [],
     },
     {

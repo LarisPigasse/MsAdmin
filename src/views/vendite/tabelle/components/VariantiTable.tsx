@@ -95,6 +95,7 @@ const Varianti: Variante[] = [
     },
 ]
 
+
 const { Tr, Th, Td, THead, TBody } = Table
 
 function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<Variante>) {
@@ -207,10 +208,11 @@ function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<
     )
 }
 
-const renderSubComponent = ({ row }: { row: Row<Variante> }) => {
+const renderSubComponent = ({ row }: { row: Row<Variante> }) => {  
+   
     return (
         <pre style={{ fontSize: '10px' }}>
-            <code>{JSON.stringify(row.original, null, 2)}</code>
+            <code>{JSON.stringify(row.original.subRows, null, 2)}</code>
         </pre>
     )
 }

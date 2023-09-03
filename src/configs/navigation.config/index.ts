@@ -105,17 +105,17 @@ const navigationConfig = [
                 authority: [],
                 subMenu: [],
             },            
-            {
+              {
                 key: 'vendite.ordini',
-                path: '/vendite/ordini',
+                path: '/vendite/OrderList',
                 title: 'Ordini di vendita',
                 translateKey: 'nav.vendite.ordini',
                 icon: '',
-                colore: '',
+                colore: 'text-indigo-600',
                 type: NAV_ITEM_TYPE_ITEM,
                 authority: [],
                 subMenu: [],
-            },            
+            },                   
             {
                 key: 'vendite.listini',
                 path: '/vendite/listini',
@@ -129,7 +129,7 @@ const navigationConfig = [
             },                        
             {
                 key: 'vendite.prodotti',
-                path: '/vendite/prodotti',
+                path: '/vendite/ProductList',
                 title: 'Prodotti',
                 translateKey: 'nav.vendite.prodotti',
                 icon: '',

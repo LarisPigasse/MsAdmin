@@ -3,22 +3,22 @@ import Notification from '@/components/ui/Notification'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import {
     toggleDeleteConfirmation,
-    deleteProdotti,
-    getProdotti,
+    deleteProduct,
+    getProducts,
     useAppDispatch,
     useAppSelector,
 } from '../store'
 
-const ProdottiDeleteConfirmation = () => {
+const ProductDeleteConfirmation = () => {
     const dispatch = useAppDispatch()
     const dialogOpen = useAppSelector(
-        (state) => state.venditeProdotti.data.deleteConfirmation
+        (state) => state.salesProductList.data.deleteConfirmation
     )
-    const selectedProdotto = useAppSelector(
-        (state) => state.venditeProdotti.data.selectedProdotto
+    const selectedProduct = useAppSelector(
+        (state) => state.salesProductList.data.selectedProduct
     )
     const tableData = useAppSelector(
-        (state) => state.venditeProdotti.data.tableData
+        (state) => state.salesProductList.data.tableData
     )
 
     const onDialogClose = () => {
@@ -27,17 +27,17 @@ const ProdottiDeleteConfirmation = () => {
 
     const onDelete = async () => {
         dispatch(toggleDeleteConfirmation(false))
-        const success = await deleteProdotti({ id: selectedProdotto })
+        const success = await deleteProduct({ id: selectedProduct })
 
         if (success) {
-            dispatch(getProdotti(tableData))
+            dispatch(getProducts(tableData))
             toast.push(
                 <Notification
                     title={'Successfuly Deleted'}
                     type="success"
                     duration={2500}
                 >
-                    Prodotto eliminato con successo
+                    Product successfuly deleted
                 </Notification>,
                 {
                     placement: 'top-center',
@@ -58,11 +58,12 @@ const ProdottiDeleteConfirmation = () => {
             onConfirm={onDelete}
         >
             <p>
-                Sei sicuro di voler eliminare questo prodotto? Tutti i record relativi
-                saranno eliminati. Questa azione non può essere annullata.
+                Are you sure you want to delete this product? All record related
+                to this product will be deleted as well. This action cannot be
+                undone.
             </p>
         </ConfirmDialog>
     )
 }
 
-export default ProdottiDeleteConfirmation
+export default ProductDeleteConfirmation

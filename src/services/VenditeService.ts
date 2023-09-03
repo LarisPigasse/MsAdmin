@@ -1,93 +1,93 @@
 import ApiService from './ApiService'
 
-export async function apiGetVenditeDashboard<
+export async function apiGetSalesDashboardData<
     T extends Record<string, unknown>
 >() {
     return ApiService.fetchData<T>({
-        url: '/vendite/dashboard',
+        url: '/sales/dashboard',
         method: 'post',
     })
 }
 
-export async function apiGetVenditeProdotti<T, U extends Record<string, unknown>>(
+export async function apiGetSalesProducts<T, U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/vendite/prodotti',
+        url: '/sales/products',
         method: 'post',
         data,
     })
 }
 
-export async function apiDeleteVenditeProdotti<
+export async function apiDeleteSalesProducts<
     T,
     U extends Record<string, unknown>
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/vendite/prodotti/delete',
+        url: '/sales/products/delete',
         method: 'delete',
         data,
     })
 }
 
-export async function apiGetVenditeProdottiOne<T, U extends Record<string, unknown>>(
+export async function apiGetSalesProduct<T, U extends Record<string, unknown>>(
     params: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/vendite/products/one',
+        url: '/sales/product',
         method: 'get',
         params,
     })
 }
 
-export async function apiPutVenditeProdotti<T, U extends Record<string, unknown>>(
+export async function apiPutSalesProduct<T, U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/vendite/prodotti/update',
+        url: '/sales/products/update',
         method: 'put',
         data,
     })
 }
 
-export async function apiCreateVenditeProdotti<
+export async function apiCreateSalesProduct<
     T,
     U extends Record<string, unknown>
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/vendite/prodotti/create',
+        url: '/sales/products/create',
         method: 'post',
         data,
     })
 }
 
-export async function apiGetVenditeOrdini<T, U extends Record<string, unknown>>(
+export async function apiGetSalesOrders<T, U extends Record<string, unknown>>(
     params: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/vendite/ordini',
+        url: '/sales/orders',
         method: 'get',
         params,
     })
 }
 
-export async function apiDeleteVenditeOrdini<
+export async function apiDeleteSalesOrders<
     T,
     U extends Record<string, unknown>
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/vendite/ordini/delete',
+        url: '/sales/orders/delete',
         method: 'delete',
         data,
     })
 }
 
-export async function apiGetVenditeOrdiniDetails<
+export async function apiGetSalesOrderDetails<
     T,
     U extends Record<string, unknown>
 >(params: U) {
     return ApiService.fetchData<T>({
-        url: '/vendite/ordini-details',
+        url: '/sales/orders-details',
         method: 'get',
         params,
     })

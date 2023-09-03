@@ -5,15 +5,15 @@ import DataTable from '@/components/shared/DataTable'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
-    getProdotti,
+    getProducts,
     setTableData,
-    setSelectedProdotto,
+    setSelectedProduct,
     toggleDeleteConfirmation,
     useAppDispatch,
     useAppSelector,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
-import ProdottiDeleteConfirmation from './ProdottiDeleteConfirmation'
+import ProductDeleteConfirmation from './ProductDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import type {
@@ -22,7 +22,7 @@ import type {
     ColumnDef,
 } from '@/components/shared/DataTable'
 
-type Prodotto = {
+type Product = {
     id: string
     name: string
     productCode: string
@@ -42,34 +42,34 @@ const inventoryStatusColor: Record<
     }
 > = {
     0: {
-        label: 'Disponibile',
+        label: 'In Stock',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
     1: {
-        label: 'Disponibilità limitata',
+        label: 'Limited',
         dotClass: 'bg-amber-500',
         textClass: 'text-amber-500',
     },
     2: {
-        label: 'Non disponibile',
+        label: 'Out of Stock',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
     },
 }
 
-const ActionColumn = ({ row }: { row: Prodotto }) => {
+const ActionColumn = ({ row }: { row: Product }) => {
     const dispatch = useAppDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/app/vendite/prodotti-edit/${row.id}`)
+        navigate(`/app/sales/product-edit/${row.id}`)
     }
 
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedProdotto(row.id))
+        dispatch(setSelectedProduct(row.id))
     }
 
     return (
@@ -90,7 +90,7 @@ const ActionColumn = ({ row }: { row: Prodotto }) => {
     )
 }
 
-const ProdottiColumn = ({ row }: { row: Prodotto }) => {
+const ProductColumn = ({ row }: { row: Product }) => {
     const avatar = row.img ? (
         <Avatar src={row.img} />
     ) : (
@@ -105,25 +105,25 @@ const ProdottiColumn = ({ row }: { row: Prodotto }) => {
     )
 }
 
-const ProdottiTable = () => {
+const ProductTable = () => {
     const tableRef = useRef<DataTableResetHandle>(null)
 
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.venditeProdotti.data.tableData
+        (state) => state.salesProductList.data.tableData
     )
 
     const filterData = useAppSelector(
-        (state) => state.venditeProdotti.data.filterData
+        (state) => state.salesProductList.data.filterData
     )
 
     const loading = useAppSelector(
-        (state) => state.venditeProdotti.data.loading
+        (state) => state.salesProductList.data.loading
     )
 
     const data = useAppSelector(
-        (state) => state.venditeProdotti.data.prodotti
+        (state) => state.salesProductList.data.productList
     )
 
     useEffect(() => {
@@ -143,17 +143,17 @@ const ProdottiTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getProdotti({ pageIndex, pageSize, sort, query, filterData }))
+        dispatch(getProducts({ pageIndex, pageSize, sort, query, filterData }))
     }
 
-    const columns: ColumnDef<Prodotto>[] = useMemo(
+    const columns: ColumnDef<Product>[] = useMemo(
         () => [
             {
                 header: 'Name',
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
-                    return <ProdottiColumn row={row} />
+                    return <ProductColumn row={row} />
                 },
             },
             {
@@ -244,9 +244,9 @@ const ProdottiTable = () => {
                 onSelectChange={onSelectChange}
                 onSort={onSort}
             />
-            <ProdottiDeleteConfirmation />
+            <ProductDeleteConfirmation />
         </>
     )
 }
 
-export default ProdottiTable
+export default ProductTable
