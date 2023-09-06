@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
+    tabellaProdotti,
     apiGetSalesProducts,
     apiDeleteSalesProducts,
 } from '@/services/VenditeService'
@@ -25,9 +26,6 @@ type GetSalesProductsResponse = {
 
 type FilterQueries = {
     name: string
-    category: string[]
-    status: number[]
-    productStatus: number
 }
 
 export type SalesProductListState = {
@@ -43,10 +41,21 @@ type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
 
 export const SLICE_NAME = 'salesProductList'
 
+// export const getProducts = createAsyncThunk(
+//     SLICE_NAME + '/getProducts',
+//     async (data: GetSalesProductsRequest) => {
+//         const response = await apiGetSalesProducts<
+//             GetSalesProductsResponse,
+//             GetSalesProductsRequest
+//         >(data)
+//         return response.data
+//     }
+// )
+
 export const getProducts = createAsyncThunk(
     SLICE_NAME + '/getProducts',
     async (data: GetSalesProductsRequest) => {
-        const response = await apiGetSalesProducts<
+        const response = await tabellaProdotti<
             GetSalesProductsResponse,
             GetSalesProductsRequest
         >(data)
@@ -80,10 +89,7 @@ const initialState: SalesProductListState = {
     productList: [],
     tableData: initialTableData,
     filterData: {
-        name: '',
-        category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
-        status: [0, 1, 2],
-        productStatus: 0,
+        name: ''
     },
 }
 

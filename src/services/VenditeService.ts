@@ -9,6 +9,17 @@ export async function apiGetSalesDashboardData<
     })
 }
 
+export async function tabellaProdotti<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/prodotti/prodotti-filter',
+        method: 'post',
+        data,
+    })
+}
+
+
 export async function apiGetSalesProducts<T, U extends Record<string, unknown>>(
     data: U
 ) {

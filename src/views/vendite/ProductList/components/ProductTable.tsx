@@ -23,14 +23,11 @@ import type {
 } from '@/components/shared/DataTable'
 
 type Product = {
-    id: string
-    name: string
-    productCode: string
-    img: string
-    category: string
-    price: number
-    stock: number
-    status: number
+    id_prodotto: string
+    uuid_prodotto: string
+    prodotto: string
+    stato: string
+    tipo: string
 }
 
 const inventoryStatusColor: Record<
@@ -64,12 +61,12 @@ const ActionColumn = ({ row }: { row: Product }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/app/sales/product-edit/${row.id}`)
+        navigate(`/app/sales/product-edit/${row.uuid_prodotto}`)
     }
 
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedProduct(row.id))
+        dispatch(setSelectedProduct(row.uuid_prodotto))
     }
 
     return (
@@ -91,8 +88,9 @@ const ActionColumn = ({ row }: { row: Product }) => {
 }
 
 const ProductColumn = ({ row }: { row: Product }) => {
-    const avatar = row.img ? (
-        <Avatar src={row.img} />
+    // row.img
+    const avatar = row.uuid_prodotto ? (
+        <Avatar src={row.uuid_prodotto} />
     ) : (
         <Avatar icon={<FiPackage />} />
     )
@@ -100,7 +98,7 @@ const ProductColumn = ({ row }: { row: Product }) => {
     return (
         <div className="flex items-center">
             {avatar}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.name}</span>
+            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.prodotto}</span>
         </div>
     )
 }
@@ -149,53 +147,19 @@ const ProductTable = () => {
     const columns: ColumnDef<Product>[] = useMemo(
         () => [
             {
-                header: 'Name',
-                accessorKey: 'name',
+                header: 'Prodotto',
+                accessorKey: 'prodotto',
                 cell: (props) => {
                     const row = props.row.original
                     return <ProductColumn row={row} />
                 },
             },
             {
-                header: 'Category',
-                accessorKey: 'category',
+                header: 'descrizione',
+                accessorKey: 'descrizione',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.category}</span>
-                },
-            },
-            {
-                header: 'Quantity',
-                accessorKey: 'stock',
-                sortable: true,
-            },
-            {
-                header: 'Status',
-                accessorKey: 'status',
-                cell: (props) => {
-                    const { status } = props.row.original
-                    return (
-                        <div className="flex items-center gap-2">
-                            <Badge
-                                className={
-                                    inventoryStatusColor[status].dotClass
-                                }
-                            />
-                            <span
-                                className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
-                            >
-                                {inventoryStatusColor[status].label}
-                            </span>
-                        </div>
-                    )
-                },
-            },
-            {
-                header: 'Price',
-                accessorKey: 'price',
-                cell: (props) => {
-                    const { price } = props.row.original
-                    return <span>${price}</span>
+                    return <ProductColumn row={row} />
                 },
             },
             {
