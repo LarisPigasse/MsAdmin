@@ -29,7 +29,7 @@ const ProductNew = () => {
                     type="success"
                     duration={2500}
                 >
-                    Product successfuly added
+                    Nuovo prodotto inserito
                 </Notification>,
                 {
                     placement: 'top-center',

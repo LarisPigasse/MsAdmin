@@ -90,6 +90,18 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'vendite.prodottiNew',
+        path: '/vendite/product-new/',
+        component: lazy(() => import('@/views/vendite/ProductNew')),
+        authority: [],
+    },
+    {
+        key: 'vendite.prodottiNew',
+        path: '/vendite/product-edit/',
+        component: lazy(() => import('@/views/vendite/ProductEdit')),
+        authority: [],
+    },          
+    {
         key: 'vendite.tabelle',
         path: '/vendite/tabelle/',
         component: lazy(() => import('@/views/vendite/tabelle')),

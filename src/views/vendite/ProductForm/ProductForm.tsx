@@ -105,9 +105,8 @@ const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
                 onConfirm={handleConfirm}
             >
                 <p>
-                    Are you sure you want to delete this product? All record
-                    related to this product will be deleted as well. This action
-                    cannot be undone.
+                    Sei sicuro di voler eliminare questo prodotto? Anche tutti i record relativi
+                    saranno eliminati. Questa azione non può essere annullata.
                 </p>
             </ConfirmDialog>
         </>
@@ -214,7 +213,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                         type="button"
                                         onClick={() => onDiscard?.()}
                                     >
-                                        Discard
+                                        Annulla
                                     </Button>
                                     <Button
                                         size="sm"
@@ -223,7 +222,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                         icon={<AiOutlineSave />}
                                         type="submit"
                                     >
-                                        Save
+                                        Salva
                                     </Button>
                                 </div>
                             </StickyFooter>

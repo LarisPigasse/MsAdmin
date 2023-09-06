@@ -37,7 +37,7 @@ const ProductDeleteConfirmation = () => {
                     type="success"
                     duration={2500}
                 >
-                    Product successfuly deleted
+                    Prodotto eliminato
                 </Notification>,
                 {
                     placement: 'top-center',
@@ -58,9 +58,8 @@ const ProductDeleteConfirmation = () => {
             onConfirm={onDelete}
         >
             <p>
-                Are you sure you want to delete this product? All record related
-                to this product will be deleted as well. This action cannot be
-                undone.
+                Sei sicuro di voler eliminare questo prodotto? Anche tutti i record relativi
+                saranno eliminati. Questa azione non può essere annullata.
             </p>
         </ConfirmDialog>
     )
