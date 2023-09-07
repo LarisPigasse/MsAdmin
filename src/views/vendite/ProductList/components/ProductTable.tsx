@@ -61,7 +61,7 @@ const ActionColumn = ({ row }: { row: Product }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/app/sales/product-edit/${row.uuid_prodotto}`)
+        navigate(`/vendite/product-edit/${row.uuid_prodotto}`)
     }
 
     const onDelete = () => {

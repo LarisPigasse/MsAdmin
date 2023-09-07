@@ -113,7 +113,7 @@ const ImageList = (props: ImageListProps) => {
                 onCancel={onDeleteConfirmationClose}
                 onConfirm={onDelete}
             >
-                <p> Are you sure you want to remove this image? </p>
+                <p> Sei sicuro di voler eliminare questa immagine? </p>
             </ConfirmDialog>
         </>
     )
@@ -180,8 +180,8 @@ const ProductImages = (props: ProductImagesProps) => {
 
     return (
         <AdaptableCard className="mb-4">
-            <h5>Product Image</h5>
-            <p className="mb-6">Add or change image for the product</p>
+            <h5>Immagini del prodotto</h5>
+            <p className="mb-6">Aggiungi o modifica le immagini del prodotto</p>
             <FormItem>
                 <Field name="imgList">
                     {({ field, form }: FieldProps) => {
@@ -234,14 +234,14 @@ const ProductImages = (props: ProductImagesProps) => {
                                     />
                                     <p className="font-semibold">
                                         <span className="text-gray-800 dark:text-white">
-                                            Drop your image here, or{' '}
+                                            trascina la tua immagini qui, oppure{' '}
                                         </span>
                                         <span className="text-blue-500">
-                                            browse
+                                            cerca 
                                         </span>
                                     </p>
                                     <p className="mt-1 opacity-60 dark:text-white">
-                                        Support: jpeg, png
+                                        Formati supportati: jpeg, png
                                     </p>
                                 </div>
                             </Upload>
