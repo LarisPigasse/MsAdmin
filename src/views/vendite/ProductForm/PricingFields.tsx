@@ -60,8 +60,8 @@ const PricingFields = (props: PricingFieldsProps) => {
 
     return (
         <AdaptableCard divider className="mb-4">
-            <h5>Pricing</h5>
-            <p className="mb-6">Section to config product sales information</p>
+            <h5>Prezzo</h5>
+            <p className="mb-6">Sezione per configurare i parametri di vendita</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
@@ -93,7 +93,7 @@ const PricingFields = (props: PricingFieldsProps) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Price"
+                        label="Prezzo"
                         invalid={(errors.price && touched.price) as boolean}
                         errorMessage={errors.price}
                     >
@@ -103,7 +103,7 @@ const PricingFields = (props: PricingFieldsProps) => {
                                     <NumericFormatInput
                                         form={form}
                                         field={field}
-                                        placeholder="Price"
+                                        placeholder="Prezzo"
                                         customInput={
                                             PriceInput as ComponentType
                                         }
@@ -123,7 +123,7 @@ const PricingFields = (props: PricingFieldsProps) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Bulk Discount Price"
+                        label="Prezzo scontato"
                         invalid={
                             (errors.bulkDiscountPrice &&
                                 touched.bulkDiscountPrice) as boolean
@@ -136,7 +136,7 @@ const PricingFields = (props: PricingFieldsProps) => {
                                     <NumericFormatInput
                                         form={form}
                                         field={field}
-                                        placeholder="Bulk Discount Price"
+                                        placeholder="Prezzo scontato"
                                         customInput={
                                             PriceInput as ComponentType
                                         }
@@ -154,7 +154,7 @@ const PricingFields = (props: PricingFieldsProps) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Tax Rate(%)"
+                        label="Prezzo minimo"
                         invalid={(errors.taxRate && touched.taxRate) as boolean}
                         errorMessage={errors.taxRate}
                     >
@@ -164,7 +164,7 @@ const PricingFields = (props: PricingFieldsProps) => {
                                     <NumericFormatInput
                                         form={form}
                                         field={field}
-                                        placeholder="Tax Rate"
+                                        placeholder="Prezzo minimo"
                                         customInput={
                                             TaxRateInput as ComponentType
                                         }

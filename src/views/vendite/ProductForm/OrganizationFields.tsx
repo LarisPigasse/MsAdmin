@@ -28,11 +28,11 @@ type OrganizationFieldsProps = {
 }
 
 const categories = [
-    { label: 'Bags', value: 'bags' },
-    { label: 'Cloths', value: 'cloths' },
-    { label: 'Devices', value: 'devices' },
-    { label: 'Shoes', value: 'shoes' },
-    { label: 'Watches', value: 'watches' },
+    { label: 'Abbigliamento uomo', value: 'man ' },
+    { label: 'Abbigliamento donna', value: 'woman' },
+    { label: 'Abbigliamento bambino', value: 'kid' },
+    { label: 'Sport e tempo libero', value: 'sport' },
+    { label: 'Altro', value: 'altro' },
 ]
 
 const tags = [
@@ -45,12 +45,12 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
 
     return (
         <AdaptableCard divider isLastChild className="mb-4">
-            <h5>Organizations</h5>
-            <p className="mb-6">Section to config the product attribute</p>
+            <h5>Altre info</h5>
+            <p className="mb-6">Sezione per configurare altre caratteristiche del prodotto</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Category"
+                        label="Categoria"
                         invalid={
                             (errors.category && touched.category) as boolean
                         }
@@ -121,7 +121,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Vendor"
+                        label="Produttore"
                         invalid={(errors.vendor && touched.vendor) as boolean}
                         errorMessage={errors.vendor}
                     >
@@ -129,7 +129,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                             type="text"
                             autoComplete="off"
                             name="vendor"
-                            placeholder="Vendor"
+                            placeholder="Produttore"
                             component={Input}
                         />
                     </FormItem>

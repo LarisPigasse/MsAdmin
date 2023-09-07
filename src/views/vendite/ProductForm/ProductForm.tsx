@@ -61,10 +61,10 @@ type ProductForm = {
 const { useUniqueId } = hooks
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Product Name Required'),
-    price: Yup.number().required('Price Required'),
-    stock: Yup.number().required('SKU Required'),
-    category: Yup.string().required('Category Required'),
+    name: Yup.string().required('Io nome del prodotto è necessario'),
+    price: Yup.number().required('Il prezzo è necessario'),
+    stock: Yup.number().required('Il codice del prodotto è necessario'),
+    category: Yup.string().required('La categoria è necessaria'),
 })
 
 const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {

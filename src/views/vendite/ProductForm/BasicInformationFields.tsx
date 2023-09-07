@@ -20,10 +20,10 @@ const BasicInformationFields = (props: BasicInformationFields) => {
 
     return (
         <AdaptableCard divider className="mb-4">
-            <h5>Basic Information</h5>
-            <p className="mb-6">Section to config basic product information</p>
+            <h5>Informazioni di base</h5>
+            <p className="mb-6">Sezione per configurare le informazioni basilari del prodotto</p>
             <FormItem
-                label="Product Name"
+                label="Nome prodotto"
                 invalid={(errors.name && touched.name) as boolean}
                 errorMessage={errors.name}
             >
@@ -31,12 +31,12 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                     type="text"
                     autoComplete="off"
                     name="name"
-                    placeholder="Name"
+                    placeholder="Prodotto"
                     component={Input}
                 />
             </FormItem>
             <FormItem
-                label="Code"
+                label="Codice univoco"
                 invalid={(errors.productCode && touched.productCode) as boolean}
                 errorMessage={errors.productCode}
             >
@@ -44,12 +44,12 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                     type="text"
                     autoComplete="off"
                     name="productCode"
-                    placeholder="Code"
+                    placeholder="Codice prodotto"
                     component={Input}
                 />
             </FormItem>
             <FormItem
-                label="Description"
+                label="Descrizione"
                 labelClass="!justify-start"
                 invalid={(errors.description && touched.description) as boolean}
                 errorMessage={errors.description}

@@ -52,7 +52,7 @@ const ProductEdit = () => {
     }
 
     const handleDiscard = () => {
-        navigate('/app/sales/product-list')
+        navigate('/vendite/product-list')
     }
 
     const handleDelete = async (setDialogOpen: OnDeleteCallback) => {
