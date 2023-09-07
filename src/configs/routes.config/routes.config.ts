@@ -1,10 +1,11 @@
 import { lazy } from 'react'
 import authRoute from './authRoute'
 import type { Routes } from '@/@types/routes'
-
+import projectRoutes from './projectRoutes'
 export const publicRoutes: Routes = [...authRoute]
 
 export const protectedRoutes = [
+    ...projectRoutes,
     {
         key: 'home',
         path: '/home',

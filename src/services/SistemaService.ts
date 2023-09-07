@@ -4,7 +4,7 @@ export async function apiGetSistemaOperatori<T, U extends Record<string, unknown
     data: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/sistema/operatori',
+        url: '/operatori/operatori-filter',
         method: 'post',
         data,
     })
@@ -37,6 +37,16 @@ export async function apiPutSistemaOperatori<T, U extends Record<string, unknown
     return ApiService.fetchData<T>({
         url: '/sistema/operatori/update',
         method: 'put',
+        data,
+    })
+}
+
+export async function apiInsertOperatore<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/operatori/operatori',
+        method: 'post',
         data,
     })
 }

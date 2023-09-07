@@ -1,7 +1,11 @@
 import Button from '@/components/ui/Button'
 import { HiDownload, HiOutlineTrash } from 'react-icons/hi'
 import OperatoriTableSearch from './OperatoriTableSearch'
-import { setDeleteMode, useAppDispatch, useAppSelector } from '../store'
+import { setDeleteMode,
+    useAppDispatch,
+    useAppSelector, 
+    toggleNewOperatoriDialog
+} from '../store'
 import { Link } from 'react-router-dom'
 
 const BatchDeleteButton = () => {
@@ -25,9 +29,14 @@ const BatchDeleteButton = () => {
 }
 
 const OperatoriTableTools = () => {
+    const dispatch = useAppDispatch()
     const selectedRows = useAppSelector(
         (state) => state.sistemaOperatori.data.selectedRows
     )
+    const onAddNewOperatore = () => {
+        dispatch(toggleNewOperatoriDialog(true))
+    }
+
     return (
         <div className="flex flex-col lg:flex-row lg:items-center gap-4">
             {selectedRows.length > 0 && <BatchDeleteButton />}
@@ -36,6 +45,14 @@ const OperatoriTableTools = () => {
                     Export
                 </Button>
             </Link>
+
+            <Button
+                size="sm"
+                icon={<HiDownload />}
+                onClick={onAddNewOperatore}
+            >
+                Nuovo operatore
+            </Button>
             <OperatoriTableSearch />
         </div>
     )

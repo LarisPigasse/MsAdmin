@@ -5,6 +5,7 @@ import {
     PayloadAction,
 } from '@reduxjs/toolkit'
 import {
+    apiInsertOperatore,
     apiGetSistemaOperatori,
     apiDeleteSistemaOperatori,
 } from '@/services/SistemaService'
@@ -31,6 +32,7 @@ export type SistemaOperatoriState = {
     deleteMode: 'single' | 'batch' | ''
     selectedRows: string[]
     selectedRow: string
+    newOperatoriDialog: boolean
 }
 
 export const SLICE_NAME = 'sistemaOperatori'
@@ -54,8 +56,28 @@ export const deleteOperatori = async (data: { id: string | string[] }) => {
     return response.data
 }
 
+type insertOperatoreRequest = {
+    operatore: string
+    email: string
+    telefono: string
+}
+
+type insertOperatoreResponse = Operatori
+
+export const insertOperatore = createAsyncThunk(
+    SLICE_NAME + '/putProject',
+    async (data: insertOperatoreRequest) => {
+        const response = await apiInsertOperatore<
+             insertOperatoreResponse,
+             insertOperatoreRequest
+        >(data)
+        return response.data
+    }
+)
+
 const initialState: SistemaOperatoriState = {
     loading: false,
+    newOperatoriDialog: false,
     operatori: [],
     tableData: {
         total: 0,
@@ -105,6 +127,9 @@ const operatoriSlice = createSlice({
         setDeleteMode: (state, action) => {
             state.deleteMode = action.payload
         },
+        toggleNewOperatoriDialog: (state, action) => {
+            state.newOperatoriDialog = action.payload
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -127,6 +152,7 @@ export const {
     addRowItem,
     removeRowItem,
     setDeleteMode,
+    toggleNewOperatoriDialog,
 } = operatoriSlice.actions
 
 export default operatoriSlice.reducer

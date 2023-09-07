@@ -25,7 +25,7 @@ import type {
 } from '@/components/shared/DataTable'
 
 type Operatore = {
-    id: string
+    id_operatore: string
     operatore: string
     email: string
     stato: string
@@ -36,7 +36,7 @@ const OperatoriColumn = ({ row }: { row: Operatore }) => {
     const navigate = useNavigate()
 
     const onView = useCallback(() => {
-        navigate(`/app/sales/order-details/${row.id}`)
+        navigate(`/app/sales/order-details/${row.id_operatore}`)
     }, [navigate, row])
 
     return (
@@ -44,7 +44,7 @@ const OperatoriColumn = ({ row }: { row: Operatore }) => {
             className={`cursor-pointer select-none font-semibold hover:${textTheme}`}
             onClick={onView}
         >
-            #{row.id}
+            #{row.id_operatore}
         </span>
     )
 }
@@ -56,11 +56,11 @@ const ActionColumn = ({ row }: { row: Operatore }) => {
 
     const onDelete = () => {
         dispatch(setDeleteMode('single'))
-        dispatch(setSelectedRow([row.id]))
+        dispatch(setSelectedRow([row.id_operatore]))
     }
 
     const onView = useCallback(() => {
-        navigate(`/app/sales/order-details/${row.id}`)
+        navigate(`/app/sales/order-details/${row.id_operatore}`)
     }, [navigate, row])
 
     return (
@@ -98,12 +98,6 @@ const OperatoriTable = () => {
     const data = useAppSelector((state) => state.sistemaOperatori.data.operatori)
 
     const fetchData = useCallback(() => {
-        console.log('{ pageIndex, pageSize, sort, query }', {
-            pageIndex,
-            pageSize,
-            sort,
-            query,
-        })
         dispatch(getOperatori({ pageIndex, pageSize, sort, query }))
     }, [dispatch, pageIndex, pageSize, sort, query])
 
@@ -172,9 +166,9 @@ const OperatoriTable = () => {
 
     const onRowSelect = (checked: boolean, row: Operatore) => {
         if (checked) {
-            dispatch(addRowItem([row.id]))
+            dispatch(addRowItem([row.id_operatore]))
         } else {
-            dispatch(removeRowItem(row.id))
+            dispatch(removeRowItem(row.id_operatore))
         }
     }
 
@@ -184,7 +178,7 @@ const OperatoriTable = () => {
                 const originalRows = rows.map((row) => row.original)
                 const selectedIds: string[] = []
                 originalRows.forEach((row) => {
-                    selectedIds.push(row.id)
+                    selectedIds.push(row.id_operatore)
                 })
                 dispatch(setSelectedRows(selectedIds))
             } else {

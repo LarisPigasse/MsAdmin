@@ -4,8 +4,9 @@ import AdaptableCard from '@/components/shared/AdaptableCard'
 import OperatoriTable from './components/OperatoriTable'
 import OperatoriTableTools from './components/OperatoriTableTools'
 import OperatoriDeleteConfirmation from './components/OperatoriDeleteConfirmation'
+import NewOperatoriDialog from './components/NewOperatoriDialog'
 
-injectReducer('salesOrderList', reducer)
+injectReducer('sistemaOperatori', reducer)
 
 const Operatori = () => {
     return (
@@ -14,8 +15,9 @@ const Operatori = () => {
                 <h3 className="mb-4 lg:mb-0">Operatori</h3>
                 <OperatoriTableTools />
             </div>
-            <OperatoriTable />
+            <OperatoriTable /> 
             <OperatoriDeleteConfirmation />
+            <NewOperatoriDialog />
         </AdaptableCard>
     )
 }
