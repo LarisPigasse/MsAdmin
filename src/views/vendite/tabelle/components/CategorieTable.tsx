@@ -238,11 +238,10 @@ function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<
     )
 }
 
+
 const renderSubComponent = ({ row }: { row: Row<Categoria> }) => {
     return (
-        <pre style={{ fontSize: '10px' }}>
-            <code>{JSON.stringify(row.original.subRows, null, 2)}</code>
-        </pre>
+        <pre>{ JSON.stringify(row.original.subRows, null, 2)}</pre>
     )
 }
 
@@ -250,7 +249,7 @@ const CategorieTable = () => {
     return (
         <>
             <div className='font-bold mb-4'>                      
-                Varianti e attributi
+                Categorie e sottocategorie
             </div>
             <ReactTable
             renderRowSubComponent={renderSubComponent}

@@ -89,15 +89,14 @@ const ActionColumn = ({ row }: { row: Product }) => {
 
 const ProductColumn = ({ row }: { row: Product }) => {
     // row.img
-    const avatar = row.uuid_prodotto ? (
-        <Avatar src={row.uuid_prodotto} />
-    ) : (
-        <Avatar icon={<FiPackage />} />
-    )
+    // const avatar = row.uuid_prodotto ? (
+    //     <Avatar src={row.uuid_prodotto} />
+    // ) : (
+    //     <Avatar icon={<FiPackage />} />
+    // )
 
     return (
         <div className="flex items-center">
-            {avatar}
             <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.prodotto}</span>
         </div>
     )

@@ -1,8 +1,7 @@
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Timeline from '@/components/ui/Timeline'
-import Event from '@/views/account/ActivityLog/components/Event'
-import TimelineAvatar from '@/views/account/ActivityLog/components/TimeLineAvatar'
+
 import { useNavigate } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 
@@ -43,9 +42,9 @@ const Activities = ({ data = [] }: ActivitiesProps) => {
                         data.map((event, index) => (
                             <Timeline.Item
                                 key={event.type + index}
-                                media={<TimelineAvatar data={event} />}
+                             
                             >
-                                <Event compact data={event} />
+                                {/* <Event compact data={event} /> */}
                             </Timeline.Item>
                         ))
                     )}

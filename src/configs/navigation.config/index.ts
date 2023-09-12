@@ -24,7 +24,7 @@ const navigationConfig = [
                 translateKey: 'nav.appsProject.project',
                 icon: 'project',
                 type: NAV_ITEM_TYPE_COLLAPSE,
-                authority: [],
+                authority: ['SUPERROT'],
                 subMenu: [
                     {
                         key: 'appsProject.dashboard',

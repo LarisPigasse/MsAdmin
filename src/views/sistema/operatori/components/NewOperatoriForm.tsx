@@ -4,6 +4,8 @@ import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import Select from '@/components/ui/Select'
 import Avatar from '@/components/ui/Avatar'
+import Notification from '@/components/ui/Notification'
+import toast from '@/components/ui/toast'
 import hooks from '@/components/ui/hooks'
 import { Field, Form, Formik, FieldProps } from 'formik'
 import { HiCheck } from 'react-icons/hi'
@@ -29,14 +31,7 @@ type FormModel = {
     // }[]
 }
 
-type TaskCount = {
-    completedTask?: number
-    totalTask?: number
-}
-
 const { MultiValueLabel } = components
-
-const { useUniqueId } = hooks
 
 const CustomSelectOption = ({
     innerProps,
@@ -95,6 +90,10 @@ const NewProjectForm = () => {
     //     dispatch(getMembers())
     // }, [dispatch])
 
+    const { pageIndex, pageSize, sort, query, total } = useAppSelector(
+        (state) => state.sistemaOperatori.data.tableData
+    )
+
     const onSubmit = (
         formValue: FormModel,
         setSubmitting: (isSubmitting: boolean) => void
@@ -113,6 +112,20 @@ const NewProjectForm = () => {
 
         dispatch(insertOperatore(values))
         dispatch(toggleNewOperatoriDialog(false))
+        dispatch(getOperatori({ pageIndex, pageSize, sort, query }))
+        
+        toast.push(
+            <Notification
+                title="Operatore inserito con successo."
+                type="success"
+                duration={3500}
+            >
+                qualcosa...
+            </Notification>,
+            {
+                placement: 'top-center',
+            }
+        )
     }
 
     return (
