@@ -1,5 +1,5 @@
 
-import { useMemo, Fragment, useEffect, useState } from 'react'
+import { useMemo, Fragment } from 'react'
 import Table from '@/components/ui/Table'
 import {
     useReactTable,
@@ -7,13 +7,9 @@ import {
     getExpandedRowModel,
     flexRender,
 } from '@tanstack/react-table'
-import SottocategorieTable from './SottocategorieTable';
-import { apiGetCategorie } from '@/services/CategorieSottocategorieService';
-
 import { HiOutlineChevronRight, HiOutlineChevronDown } from 'react-icons/hi'
 import type { ColumnDef, Row } from '@tanstack/react-table'
 import type { ReactElement } from 'react'
-
 
 type ReactTableProps<T> = {
     renderRowSubComponent: (props: { row: Row<T> }) => ReactElement
@@ -129,9 +125,6 @@ const Categorie: Categoria[] = [
 const { Tr, Th, Td, THead, TBody } = Table
 
 function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<Categoria>) {
-    
-    const [categorie, setCategorie] = useState([]);
-
     const columns = useMemo<ColumnDef<Categoria>[]>(
         () => [
             {
@@ -177,19 +170,8 @@ function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<
         []
     )
 
-    const getCategorie = async () => {
-        let a = await apiGetCategorie();
-        let res : any = await a.data;
-        console.log(res)
-        setCategorie(res);
-    }
-
-    useEffect(() => {
-        getCategorie();
-    }, [])
-    
     const table = useReactTable({
-        data: categorie,
+        data: Categorie,
         columns,
         getRowCanExpand,
         getCoreRowModel: getCoreRowModel(),
@@ -256,22 +238,23 @@ function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<
     )
 }
 
+
 const renderSubComponent = ({ row }: { row: Row<Categoria> }) => {
     return (
-        <SottocategorieTable data={row.original.id_categoria} />
+        <pre>{ JSON.stringify(row.original.subRows, null, 2)}</pre>
     )
 }
 
 const CategorieTable = () => {
     return (
         <>
-            <div className='font-bold mb-4'>
+            <div className='font-bold mb-4'>                      
                 Categorie e sottocategorie
             </div>
             <ReactTable
-                renderRowSubComponent={renderSubComponent}
-                getRowCanExpand={() => true}
-            />
+            renderRowSubComponent={renderSubComponent}
+            getRowCanExpand={() => true}
+            />                     
         </>
     )
 }

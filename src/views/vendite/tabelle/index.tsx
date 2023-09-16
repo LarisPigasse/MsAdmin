@@ -3,6 +3,8 @@ import AliquoteTable from './components/AliquoteTable'
 import VariantiTable from './components/VariantiTable'
 import CategorieTable from './components/CategorieTable'
 import OperatoriTable from './components/OperatoriTable'
+import CategoriaTest from './components/CategoriaTest'
+
 const { TabNav, TabList, TabContent } = Tabs
 
 const Tabelle = () => {
@@ -27,7 +29,7 @@ const Tabelle = () => {
                         <AliquoteTable/>
                     </TabContent>
                     <TabContent value="tabProva">
-                        <OperatoriTable/>
+                        <CategoriaTest/>
                     </TabContent>
                 </div>
             </Tabs>

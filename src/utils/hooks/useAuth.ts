@@ -34,15 +34,20 @@ function useAuth() {
     > => {
         try {
             const resp = await apiSignIn(values)
+
             if (resp.data) {
-                const { token } = resp.data
+                const { token } = resp.data.utente
+
                 dispatch(signInSuccess(token))
-                if (resp.data.user) {
+                if (resp.data) {
                     dispatch(
                         setUser(
-                            resp.data.user || {
+                            {...resp.data,
+                                authority: ['USER'],
+                                avatar:''
+                            } || {
                                 avatar: '',
-                                userName: 'Anonymous',
+                                utente: 'Anonymous',
                                 authority: ['USER'],
                                 email: '',
                             }
@@ -71,14 +76,14 @@ function useAuth() {
         try {
             const resp = await apiSignUp(values)
             if (resp.data) {
-                const { token } = resp.data
+                const { token } = resp.data.utente
                 dispatch(signInSuccess(token))
-                if (resp.data.user) {
+                if (resp.data.utente) {
                     dispatch(
                         setUser(
-                            resp.data.user || {
+                            resp.data.utente || {
                                 avatar: '',
-                                userName: 'Anonymous',
+                                utente: 'Anonymous',
                                 authority: ['USER'],
                                 email: '',
                             }
@@ -108,7 +113,7 @@ function useAuth() {
         dispatch(
             setUser({
                 avatar: '',
-                userName: '',
+                account: '',
                 email: '',
                 authority: [],
             })
@@ -117,7 +122,7 @@ function useAuth() {
     }
 
     const signOut = async () => {
-        await apiSignOut()
+        //await apiSignOut()
         handleSignOut()
     }
 

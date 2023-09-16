@@ -22,6 +22,14 @@ export async function apiDeleteSistemaOperatori<
         method: 'delete'
     })
 }
+export async function apiGetSistemaCategorie(data : any){
+    return ApiService.fetchData({
+        url: '/categorie/categorie-filter',
+        method: 'post',
+        data
+    })
+}
+
 
 export async function apiGetSistemaOperatore<T, U extends Record<string, unknown>>(
     params: U

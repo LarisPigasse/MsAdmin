@@ -8,6 +8,7 @@ import {
     apiInsertOperatore,
     apiGetSistemaOperatori,
     apiDeleteSistemaOperatori,
+    apiGetSistemaCategorie
 } from '@/services/SistemaService'
 import type { TableQueries } from '@/@types/common'
 
@@ -18,24 +19,43 @@ type Operatore = {
     stato: string
 }
 
+type Categoria = {
+    id_categoria: string
+    categoria: string
+    descrizione: string
+    stato: string
+}
+
 type Operatori = Operatore[]
+type Categorie = Categoria[]
 
 type GetSistemaOperatoriResponse = {
     data: Operatori
     total: number
 }
 
-export type SistemaOperatoriState = {
+export type SistemaTabelleState = {
     loading: boolean
     operatori: Operatori
+    categorie: Categorie
     tableData: TableQueries
+    tableDataCategorie: TableQueries
     deleteMode: 'single' | 'batch' | ''
     selectedRows: string[]
     selectedRow: string
     newOperatoriDialog: boolean
 }
 
-export const SLICE_NAME = 'sistemaOperatori'
+export const SLICE_NAME = 'sistemaTabelle'
+
+export const getCategorie = createAsyncThunk(
+    SLICE_NAME + '/getCategorie',
+    async (data: TableQueries) => {
+        const response = await apiGetSistemaCategorie(data)
+        console.log(response)
+        return response.data
+    }
+)
 
 export const getOperatori = createAsyncThunk(
     SLICE_NAME + '/getOperatori',
@@ -76,10 +96,11 @@ export const insertOperatore = createAsyncThunk(
     }
 )
 
-const initialState: SistemaOperatoriState = {
+const initialState: SistemaTabelleState = {
     loading: false,
     newOperatoriDialog: false,
     operatori: [],
+    categorie: [],
     tableData: {
         total: 0,
         pageIndex: 1,
@@ -90,12 +111,22 @@ const initialState: SistemaOperatoriState = {
             key: '',
         },
     },
+    tableDataCategorie: {
+        total: 0,
+        pageIndex: 1,
+        pageSize: 10,
+        query: '',
+        sort: {
+            order: '',
+            key: '',
+        }
+    },
     selectedRows: [],
     selectedRow: '',
     deleteMode: '',
 }
 
-const operatoriSlice = createSlice({
+const tabellaSlice = createSlice({
     name: `${SLICE_NAME}/state`,
     initialState,
     reducers: {
@@ -104,6 +135,9 @@ const operatoriSlice = createSlice({
         },
         setTableData: (state, action) => {
             state.tableData = action.payload
+        },
+        setTableDataCategorie: (state, action) => {
+            state.tableDataCategorie = action.payload
         },
         setSelectedRows: (state, action) => {
             state.selectedRows = action.payload
@@ -148,12 +182,13 @@ const operatoriSlice = createSlice({
 export const {
     setOperatori,
     setTableData,
+    setTableDataCategorie,
     setSelectedRows,
     setSelectedRow,
     addRowItem,
     removeRowItem,
     setDeleteMode,
     toggleNewOperatoriDialog,
-} = operatoriSlice.actions
+} = tabellaSlice.actions
 
-export default operatoriSlice.reducer
+export default tabellaSlice.reducer
