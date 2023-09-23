@@ -57,7 +57,7 @@ const ProductEdit = () => {
 
     const handleDelete = async (setDialogOpen: OnDeleteCallback) => {
         setDialogOpen(false)
-        const success = await deleteProduct({ id: productData.id })
+        const success = await deleteProduct({ uuid_prodotto: productData.uuid_prodotto })
         if (success) {
             popNotification('deleted')
         }
@@ -90,7 +90,7 @@ const ProductEdit = () => {
 
     return (
         <>
-            <Loading loading={loading}>
+             <Loading loading={loading}>
                 {!isEmpty(productData) && (
                     <>
                         <ProductForm

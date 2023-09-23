@@ -1,31 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetSalesProduct,
+    getProdotti,
     apiPutSalesProduct,
     apiDeleteSalesProducts,
 } from '@/services/VenditeService'
 
 type ProductData = {
-    id?: string
-    name?: string
-    productCode?: string
-    img?: string
-    imgList?: {
-        id: string
-        name: string
-        img: string
-    }[]
-    category?: string
-    price?: number
-    stock?: number
-    status?: number
-    costPerItem?: number
-    bulkDiscountPrice?: number
-    description?: string
-    taxRate?: 6
-    tags?: string[]
-    brand?: string
-    vendor?: string
+    uuid_prodotto?: string,
+    prodotto?: string,
+    descrizione?: string,
+    scheda?: string,
+    tipo?: string,
+    tags?: string,
+    codice?: number,
+    sku?: number,
+    id_categoria?: number,
+    id_sottocategoria?: number,
+    id_produttore?: number,
+    id_aliquota?: number,
+    stato?: string
 }
 
 export type SalesProductEditState = {
@@ -40,7 +33,7 @@ export const SLICE_NAME = 'salesProductEdit'
 export const getProduct = createAsyncThunk(
     SLICE_NAME + '/getProducts',
     async (data: { id: string }) => {
-        const response = await apiGetSalesProduct<
+        const response = await getProdotti<
             GetSalesProductResponse,
             { id: string }
         >(data)

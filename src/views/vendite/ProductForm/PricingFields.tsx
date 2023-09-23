@@ -13,10 +13,11 @@ import type { ComponentType } from 'react'
 import type { InputProps } from '@/components/ui/Input'
 
 type FormFieldsName = {
-    stock: number
-    price: number
-    bulkDiscountPrice: number
-    taxRate: number
+    tipo: string
+    scheda: string
+    stato: string
+    tags: string
+    sku: string
 }
 
 type PricingFieldsProps = {
@@ -60,22 +61,22 @@ const PricingFields = (props: PricingFieldsProps) => {
 
     return (
         <AdaptableCard divider className="mb-4">
-            <h5>Prezzo</h5>
+            <h5>(scheda, tipo, tags, sku, stato)</h5>
             <p className="mb-6">Sezione per configurare i parametri di vendita</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="SKU"
-                        invalid={(errors.stock && touched.stock) as boolean}
-                        errorMessage={errors.stock}
+                        label="Tipo"
+                        invalid={(errors.tipo && touched.tipo) as boolean}
+                        errorMessage={errors.tipo}
                     >
-                        <Field name="stock">
+                        <Field name="tipo">
                             {({ field, form }: FieldProps) => {
                                 return (
                                     <NumericFormatInput
                                         form={form}
                                         field={field}
-                                        placeholder="Stock"
+                                        placeholder="tipo"
                                         customInput={
                                             NumberInput as ComponentType
                                         }
@@ -93,78 +94,49 @@ const PricingFields = (props: PricingFieldsProps) => {
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Prezzo"
-                        invalid={(errors.price && touched.price) as boolean}
-                        errorMessage={errors.price}
+                        label="Scheda"
+                        invalid={(errors.scheda && touched.scheda) as boolean}
+                        errorMessage={errors.scheda}
                     >
-                        <Field name="price">
-                            {({ field, form }: FieldProps) => {
-                                return (
-                                    <NumericFormatInput
-                                        form={form}
-                                        field={field}
-                                        placeholder="Prezzo"
-                                        customInput={
-                                            PriceInput as ComponentType
-                                        }
-                                        onValueChange={(e) => {
-                                            form.setFieldValue(
-                                                field.name,
-                                                e.value
-                                            )
-                                        }}
-                                    />
-                                )
-                            }}
-                        </Field>
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="scheda"
+                            placeholder="scheda"
+                            component={Input}
+                        />
                     </FormItem>
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Prezzo scontato"
-                        invalid={
-                            (errors.bulkDiscountPrice &&
-                                touched.bulkDiscountPrice) as boolean
-                        }
-                        errorMessage={errors.bulkDiscountPrice}
+                        label="Sku"
+                        invalid={(errors.sku && touched.sku) as boolean}
+                        errorMessage={errors.sku}
                     >
-                        <Field name="bulkDiscountPrice">
-                            {({ field, form }: FieldProps) => {
-                                return (
-                                    <NumericFormatInput
-                                        form={form}
-                                        field={field}
-                                        placeholder="Prezzo scontato"
-                                        customInput={
-                                            PriceInput as ComponentType
-                                        }
-                                        onValueChange={(e) => {
-                                            form.setFieldValue(
-                                                field.name,
-                                                e.value
-                                            )
-                                        }}
-                                    />
-                                )
-                            }}
-                        </Field>
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="sku"
+                            placeholder="sku"
+                            component={Input}
+                        />
                     </FormItem>
                 </div>
                 <div className="col-span-1">
                     <FormItem
-                        label="Prezzo minimo"
-                        invalid={(errors.taxRate && touched.taxRate) as boolean}
-                        errorMessage={errors.taxRate}
+                        label="stato"
+                        invalid={(errors.stato && touched.stato) as boolean}
+                        errorMessage={errors.stato}
                     >
-                        <Field name="taxRate">
+                        <Field name="stato">
                             {({ field, form }: FieldProps) => {
                                 return (
                                     <NumericFormatInput
                                         form={form}
                                         field={field}
-                                        placeholder="Prezzo minimo"
+                                        placeholder="stato"
                                         customInput={
                                             TaxRateInput as ComponentType
                                         }

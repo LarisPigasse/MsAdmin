@@ -1,13 +1,5 @@
 import ApiService from './ApiService'
 
-export async function apiGetSalesDashboardData<
-    T extends Record<string, unknown>
->() {
-    return ApiService.fetchData<T>({
-        url: '/sales/dashboard',
-        method: 'post',
-    })
-}
 
 export async function tabellaProdotti<T, U extends Record<string, unknown>>(
     data: U
@@ -16,6 +8,26 @@ export async function tabellaProdotti<T, U extends Record<string, unknown>>(
         url: '/prodotti/prodotti-filter',
         method: 'post',
         data,
+    })
+}
+
+export async function insertProdotto<
+    T,
+    U extends Record<string, unknown>
+>(data: U) {
+    return ApiService.fetchData<T>({
+        url: '/prodotti',
+        method: 'post',
+        data,
+    })
+}
+
+export async function apiGetSalesDashboardData<
+    T extends Record<string, unknown>
+>() {
+    return ApiService.fetchData<T>({
+        url: '/sales/dashboard',
+        method: 'post',
     })
 }
 
@@ -35,19 +47,17 @@ export async function apiDeleteSalesProducts<
     U extends Record<string, unknown>
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/products/delete',
-        method: 'delete',
-        data,
+        url: `/prodotti/${data.uuid_prodotto}`,
+        method: 'delete'
     })
 }
 
-export async function apiGetSalesProduct<T, U extends Record<string, unknown>>(
+export async function getProdotti<T, U extends Record<string, unknown>>(
     params: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/sales/product',
-        method: 'get',
-        params,
+        url: `/prodotti/${params.id}`,
+        method: 'get'
     })
 }
 

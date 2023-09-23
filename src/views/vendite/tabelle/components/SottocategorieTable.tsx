@@ -139,16 +139,15 @@ const SottocategorieTable = (data: any) => {
     //     setSottocategorie(res);
     // }
 
-    const getSottocategorie = async (data: { id: string }) => {
-        const response = await apiGetSottocategorie<
-            [],
-            { id: string }
-        >(data)
-        setSottocategorie(response.data);
+    const getSottocategorie = async (data : any) => {        
+        const response = await apiGetSottocategorie(data.data)
+        let responseData :any = response.data;
+        setSottocategorie(responseData);
         return 
     }
 
     useEffect(() => {
+     
        getSottocategorie(data)
     }, [])
 

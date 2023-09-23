@@ -3,7 +3,7 @@ import Notification from '@/components/ui/Notification'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import {
     toggleDeleteConfirmation,
-    deleteProduct,
+    eliminaProdotto,
     getProducts,
     useAppDispatch,
     useAppSelector,
@@ -27,7 +27,7 @@ const ProductDeleteConfirmation = () => {
 
     const onDelete = async () => {
         dispatch(toggleDeleteConfirmation(false))
-        const success = await deleteProduct({ id: selectedProduct })
+        const success = await eliminaProdotto({ uuid_prodotto: selectedProduct })
 
         if (success) {
             dispatch(getProducts(tableData))

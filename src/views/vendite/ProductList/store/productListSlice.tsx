@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     tabellaProdotti,
-    apiGetSalesProducts,
     apiDeleteSalesProducts,
 } from '@/services/VenditeService'
 import type { TableQueries } from '@/@types/common'
@@ -63,10 +62,10 @@ export const getProducts = createAsyncThunk(
     }
 )
 
-export const deleteProduct = async (data: { id: string | string[] }) => {
+export const eliminaProdotto = async (data: { uuid_prodotto: string | string[] }) => {
     const response = await apiDeleteSalesProducts<
         boolean,
-        { id: string | string[] }
+        { uuid_prodotto: string | string[] }
     >(data)
     return response.data
 }

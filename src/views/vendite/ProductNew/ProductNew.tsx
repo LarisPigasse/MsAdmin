@@ -5,13 +5,13 @@ import ProductForm, {
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import { useNavigate } from 'react-router-dom'
-import { apiCreateSalesProduct } from '@/services/VenditeService'
+import { insertProdotto } from '@/services/VenditeService'
 
 const ProductNew = () => {
     const navigate = useNavigate()
 
     const addProduct = async (data: FormModel) => {
-        const response = await apiCreateSalesProduct<boolean, FormModel>(data)
+        const response = await insertProdotto<boolean, FormModel>(data)
         return response.data
     }
 

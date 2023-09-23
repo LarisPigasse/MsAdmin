@@ -7,13 +7,13 @@ export async function apiGetCategorie<T>() {
     })
 }
 
-export async function apiGetSottocategorie2<T>() {
-    return ApiService.fetchData<T>({
-        url: '/sottocategorie',
+export async function apiGetSottocategorie(id : string ) {
+    return ApiService.fetchData({
+        url: `/sottocategorie/${id}`,
         method: 'get',
     })
 }
-export async function apiGetSottocategorie<T, U extends Record<string, unknown>>(
+export async function apiGetSottocategorie2<T, U extends Record<string, unknown>>(
     params: U
 ) {
     return ApiService.fetchData<T>({

@@ -97,8 +97,8 @@ export const protectedRoutes = [
         authority: [],
     },
     {
-        key: 'vendite.prodottiNew',
-        path: '/vendite/product-edit/',
+        key: 'vendite.prodottiEdit',
+        path: '/vendite/product-edit/:uuid_prodotto',
         component: lazy(() => import('@/views/vendite/ProductEdit')),
         authority: [],
     },          

@@ -8,7 +8,8 @@ export type AppConfig = {
 }
 
 const appConfig: AppConfig = {
-    apiPrefix: 'https://backend.resortabruzzo.it/api',
+    //apiPrefix: 'https://backend.resortabruzzo.it/api',
+    apiPrefix: 'http://localhost:4000/api',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',

@@ -17,20 +17,27 @@ import * as Yup from 'yup'
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 type FormikRef = FormikProps<any>
 
-type InitialData = {    
-    uuid_prodotto?: string,
-    prodotto?: string,
-    descrizione?: string,
-    scheda?: string,
-    tipo?: string,
-    tags?: string,
-    codice?: number,
-    sku?: number,
-    id_categoria?: number,
-    id_sottocategoria?: number,
-    id_produttore?: number,
-    id_aliquota?: number,
-    stato?: string
+type InitialData = {
+    id?: string
+    name?: string
+    productCode?: string
+    img?: string
+    imgList?: {
+        id: string
+        name: string
+        img: string
+    }[]
+    category?: string
+    price?: number
+    stock?: number
+    status?: number
+    costPerItem?: number
+    bulkDiscountPrice?: number
+    taxRate?: number
+    tags?: string[]
+    brand?: string
+    vendor?: string
+    description?: string
 }
 
 export type FormModel = Omit<InitialData, 'tags'> & {
@@ -54,9 +61,10 @@ type ProductForm = {
 const { useUniqueId } = hooks
 
 const validationSchema = Yup.object().shape({
-    prodotto: Yup.string().required('Il nome del prodotto è necessario'),
-    descrizione: Yup.string().required('La descrizione è necessaria'),
-    codice: Yup.number().required('Il codice del prodotto è necessario'),
+    name: Yup.string().required('Io nome del prodotto è necessario'),
+    price: Yup.number().required('Il prezzo è necessario'),
+    stock: Yup.number().required('Il codice del prodotto è necessario'),
+    category: Yup.string().required('La categoria è necessaria'),
 })
 
 const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
@@ -109,19 +117,22 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
     const {
         type,
         initialData = {
-            uuid_prodotto: '',
-            prodotto: '',
-            descrizione: '',
-            scheda: '',
-            tipo: '',
-            tags: '',
-            codice: 0,
-            sku: 0,
-            id_categoria: 0,
-            id_sottocategoria: 0,
-            id_produttore: 0,
-            id_aliquota: 1,
-            stato: ''
+            id: '',
+            name: '',
+            productCode: '',
+            img: '',
+            imgList: [],
+            category: '',
+            price: 0,
+            stock: 0,
+            status: 0,
+            costPerItem: 0,
+            bulkDiscountPrice: 0,
+            taxRate: 6,
+            tags: [],
+            brand: '',
+            vendor: '',
+            description: '',
         },
         onFormSubmit,
         onDiscard,
@@ -135,29 +146,29 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
             <Formik
                 innerRef={ref}
                 initialValues={{
-                    ...initialData
-                    // tags: initialData?.tags
-                    //     ? initialData.tags.map((value) => ({
-                    //           label: value,
-                    //           value,
-                    //       }))
-                    //     : [],
+                    ...initialData,
+                    tags: initialData?.tags
+                        ? initialData.tags.map((value) => ({
+                              label: value,
+                              value,
+                          }))
+                        : [],
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values: FormModel, { setSubmitting }) => {
                     const formData = cloneDeep(values)
-                    // formData.tags = formData.tags.map((tag) => {
-                    //     if (typeof tag !== 'string') {
-                    //         return tag.value
-                    //     }
-                    //     return tag
-                    // })
-                    // if (type === 'new') {
-                    //     formData.id = newId
-                    //     if (formData.imgList && formData.imgList.length > 0) {
-                    //         formData.img = formData.imgList[0].img
-                    //     }
-                    // }
+                    formData.tags = formData.tags.map((tag) => {
+                        if (typeof tag !== 'string') {
+                            return tag.value
+                        }
+                        return tag
+                    })
+                    if (type === 'new') {
+                        formData.id = newId
+                        if (formData.imgList && formData.imgList.length > 0) {
+                            formData.img = formData.imgList[0].img
+                        }
+                    }
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >
@@ -181,7 +192,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                     />
                                 </div>
                                 <div className="lg:col-span-1">
-                                    {/* <ProductImages values={values} /> */}
+                                    <ProductImages values={values} />
                                 </div>
                             </div>
                             <StickyFooter
