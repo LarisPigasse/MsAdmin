@@ -1,11 +1,14 @@
+import reducer from './store'
+import { injectReducer } from '@/store'
 import Tabs from '@/components/ui/Tabs'
 import AliquoteTable from './components/AliquoteTable'
 import VariantiTable from './components/VariantiTable'
 import CategorieTable from './components/CategorieTable'
-import OperatoriTable from './components/OperatoriTable'
-import CategoriaTest from './components/CategoriaTest'
 
 const { TabNav, TabList, TabContent } = Tabs
+
+
+injectReducer('venditeTabelle', reducer)
 
 const Tabelle = () => {
     return (
@@ -16,7 +19,6 @@ const Tabelle = () => {
                     <TabNav value="tabCategorie">Categorie</TabNav>
                     <TabNav value="tabVarianti">Varianti</TabNav>
                     <TabNav value="tabAliquote">Aliquote</TabNav>
-                    <TabNav value="tabProva">Prova</TabNav>
                 </TabList>
                 <div className="p-4">
                     <TabContent value="tabCategorie">
@@ -28,14 +30,10 @@ const Tabelle = () => {
                     <TabContent value="tabAliquote">
                         <AliquoteTable/>
                     </TabContent>
-                    <TabContent value="tabProva">
-                        <CategoriaTest/>
-                    </TabContent>
                 </div>
             </Tabs>
         </div>
     )
 }
-
 
 export default Tabelle

@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react';
 import Table from '@/components/ui/Table'
+import { apiGetAliquote } from '@/services/HelperService'
 
 const { Tr, Th, Td, THead, TBody } = Table
 
@@ -31,18 +33,26 @@ const Aliquote: Aliquota[] = [
 ]
 
 
-const rows = Aliquote.map((aliquota) => {
-    return (
-        <tr key={aliquota.id_aliquota}>
-            <td>{aliquota.id_aliquota}</td>
-            <td>{aliquota.aliquota}</td>
-            <td>{aliquota.descrizione}</td>
-            <td>{aliquota.stato}</td>
-        </tr>
-    );
-});
 
 const AliquoteTable = () => {
+
+    const [aliquote, setAliquote] = useState([
+        {id_aliquota: '',
+        aliquota: '',
+        descrizione: '',
+        stato: ''}
+    ]);
+
+    const getAliquote = async () => {
+        let response = await apiGetAliquote();
+        let data : any = await response.data;
+        setAliquote(data);
+    }
+    
+    useEffect(() => {
+        getAliquote();
+    }, [])
+
     return (
         <div>
             <div className='font-bold mb-4'>                      
@@ -59,7 +69,18 @@ const AliquoteTable = () => {
                         </Tr>
                     </THead>
                     <TBody>
-                        {rows}                   
+                        {
+                            aliquote.map((aliquota) => {
+                                return (
+                                    <tr key={aliquota.id_aliquota}>
+                                        <td>{aliquota.id_aliquota}</td>
+                                        <td>{aliquota.aliquota}</td>
+                                        <td>{aliquota.descrizione}</td>
+                                        <td>{aliquota.stato}</td>
+                                    </tr>
+                                );
+                            })
+                        }                   
                     </TBody>
                 </Table>
             </div>

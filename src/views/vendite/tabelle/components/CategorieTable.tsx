@@ -1,6 +1,7 @@
 
 import { useMemo, Fragment, useEffect, useState } from 'react'
-import Table from '@/components/ui/Table'
+import {Table, Button} from '@/components/ui'
+import { HiDownload } from 'react-icons/hi'
 import {
     useReactTable,
     getCoreRowModel,
@@ -13,6 +14,14 @@ import { apiGetCategorie } from '@/services/CategorieSottocategorieService';
 import { HiOutlineChevronRight, HiOutlineChevronDown } from 'react-icons/hi'
 import type { ColumnDef, Row } from '@tanstack/react-table'
 import type { ReactElement } from 'react'
+
+import NewCategorieDialog from './NewCategorieDialog';
+
+import {
+    useAppDispatch,
+    useAppSelector,
+    toggleNewCategoriaDialog
+} from '../store'
 
 
 type ReactTableProps<T> = {
@@ -263,10 +272,26 @@ const renderSubComponent = ({ row }: { row: Row<Categoria> }) => {
 }
 
 const CategorieTable = () => {
+
+    const dispatch = useAppDispatch()
+
+    const onAddCategorie = () => {
+        dispatch(toggleNewCategoriaDialog(true))
+    }
+
     return (
         <>
+            <NewCategorieDialog />
             <div className='font-bold mb-4'>
                 Categorie e sottocategorie
+
+                <Button
+                    size="sm"
+                    icon={<HiDownload />}
+                    onClick={ onAddCategorie }
+                >
+                    Nuova categoria
+                </Button>
             </div>
             <ReactTable
                 renderRowSubComponent={renderSubComponent}
