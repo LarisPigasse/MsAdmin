@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react'
 import AdaptableCard from '@/components/shared/AdaptableCard'
 import { FormItem } from '@/components/ui/Form'
-import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import CreatableSelect from 'react-select/creatable'
 import { Field, FormikErrors, FormikTouched, FieldProps } from 'formik'
+
+import { apiGetCategorie,apiGetSottocategorie } from '@/services/CategorieSottocategorieService';
+import { apiGetAliquote, apiGetProduttori } from '@/services/HelperService';
 
 type Options = {
     label: string
@@ -26,35 +29,60 @@ type OrganizationFieldsProps = {
     }
 }
 
-const categories = [
-    { label: 'Abbigliamento uomo', value: 1 },
-    { label: 'Abbigliamento donna', value: 2 },
-    { label: 'Abbigliamento bambino', value: 3 },
-    { label: 'Sport e tempo libero', value: 4 },
-    { label: 'Altro', value: 5 },
-]
-
-const aliquote = [
-    { label: 'IVA 22%', value: 22 },
-    { label: 'IVA 10%', value: 10 },
-    { label: 'IVA 4%', value: 4 }
-]
-
-const produttori = [
-    { label: 'Produttore 1', value: 1 },
-    { label: 'Produttore 2', value: 2 },
-    { label: 'Produttore 3', value: 3 }
-]
-
-const tags = [
-    { label: 'trend', value: 'trend' },
-    { label: 'unisex', value: 'unisex' },
-]
-
 const OrganizationFields = (props: OrganizationFieldsProps) => {
+    
+    const [categorie, setCategorie] = useState([ { label : 'Predefinita', value: 0} ]);
+    const [sottocategorie, setSottocategorie] = useState([ { label : 'Predefinita', value: 0} ]);
+    const [aliquote, setAliquote] = useState([ { label : 'Predefinita', value: 0} ]);
+    const [produttori, setProduttori] = useState([ { label : '', value: 0} ]);
+
+    const initComponente =  async () => {
+
+        let response = await apiGetAliquote();
+        let data : any = await response.data;
+
+        let _aliquote = await data.map(
+            (iva : any) => ( { label : iva.aliquota, value: iva.id_aliquota} )
+        )
+
+        setAliquote(_aliquote)
+
+        response = await apiGetCategorie();
+        data = await response.data;
+        
+        let _categorie = await data.map(
+            (category : any) => ( { label : category.categoria, value: category.id_categoria} )
+        )
+
+        setCategorie(_categorie)
+
+        response = await apiGetProduttori();
+        data = await response.data;
+        
+        let _produttori = await data.map(
+            (pro : any) => ( { label : pro.produttore, value: pro.id_produttore} )
+        )
+
+        setProduttori(_produttori)
+    }
+
+    const getSottocategorie = async (id : any)=>{
+       let response = await apiGetSottocategorie(id);
+       let data :any = await response.data;
+        let _sottocat = await data.map(
+            (sottocat : any) => ( { label : sottocat.sottocategoria, value: sottocat.id_sottocategoria} )
+        )
+            console.log(_sottocat)
+        setSottocategorie(_sottocat)
+    }
+
+    useEffect(() => {
+        initComponente();
+    }, [])
+    
     const { 
             values = {
-                id_categoria: '', 
+                id_categoria: [], 
                 id_sottocategoria: [],
                 id_produttore: [],
                 id_aliquota: [],
@@ -79,16 +107,19 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                                 <Select
                                     field={field}
                                     form={form}
-                                    options={categories}
-                                    value={categories.filter(
-                                        (category) =>
+                                    options={categorie}
+                                    value={categorie.filter(
+                                        (category : any) =>
                                             category.value === values.id_categoria
                                     )}
                                     onChange={(option) =>
-                                        form.setFieldValue(
-                                            field.name,
-                                            option?.value
-                                        )
+                                        {
+                                            getSottocategorie(option?.value)
+                                            return form.setFieldValue(
+                                                field.name,
+                                                option?.value
+                                            )
+                                        }
                                     }
                                 />
                             )}
@@ -109,8 +140,8 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                                     componentAs={CreatableSelect}
                                     field={field}
                                     form={form}
-                                    options={categories}
-                                    value={categories.filter(
+                                    options={sottocategorie}
+                                    value={sottocategorie.filter(
                                         (category) =>
                                             category.value === values.id_sottocategoria
                                     )}
