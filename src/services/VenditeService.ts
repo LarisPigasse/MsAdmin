@@ -61,13 +61,13 @@ export async function getProdotti<T, U extends Record<string, unknown>>(
     })
 }
 
-export async function apiPutSalesProduct<T, U extends Record<string, unknown>>(
+export async function apiUpdateProdotti<T, U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/sales/products/update',
+        url: `/prodotti/${data.uuid_prodotto}`,
         method: 'put',
-        data,
+        data
     })
 }
 

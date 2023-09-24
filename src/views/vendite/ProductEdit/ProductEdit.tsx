@@ -5,7 +5,7 @@ import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import reducer, {
     getProduct,
-    updateProduct,
+    updateProdotti,
     deleteProduct,
     useAppSelector,
     useAppDispatch,
@@ -44,7 +44,8 @@ const ProductEdit = () => {
         setSubmitting: SetSubmitting
     ) => {
         setSubmitting(true)
-        const success = await updateProduct(values)
+        console.log(values)
+        const success = await updateProdotti(values)
         setSubmitting(false)
         if (success) {
             popNotification('updated')
@@ -76,7 +77,7 @@ const ProductEdit = () => {
                 placement: 'top-center',
             }
         )
-        navigate('/app/sales/product-list')
+        navigate('/vendite/ProductList')
     }
 
     useEffect(() => {

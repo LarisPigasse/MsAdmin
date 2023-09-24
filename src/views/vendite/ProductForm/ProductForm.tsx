@@ -8,6 +8,7 @@ import { Form, Formik, FormikProps } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
 import PricingFields from './PricingFields'
 import OrganizationFields from './OrganizationFields'
+import ArticoliFields from './ArticoliFields'
 import ProductImages from './ProductImages'
 import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
@@ -30,7 +31,11 @@ type InitialData = {
     id_sottocategoria?: number,
     id_produttore?: number,
     id_aliquota?: number,
-    stato?: string
+    stato?: string,
+    prezzo_listino?: number,
+    prezzo_offerta?: number,
+    prezzo_minimo?: number,
+    note?: string
 }
 
 export type FormModel = Omit<InitialData, 'tags'> & {
@@ -121,7 +126,11 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
             id_sottocategoria: 0,
             id_produttore: 0,
             id_aliquota: 1,
-            stato: ''
+            stato: '',
+            prezzo_listino: 0,
+            prezzo_offerta: 0,
+            prezzo_minimo: 0,
+            note: ''
         },
         onFormSubmit,
         onDiscard,
@@ -178,6 +187,10 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                         touched={touched}
                                         errors={errors}
                                         values={values}
+                                    />
+                                    <ArticoliFields
+                                        touched={touched}
+                                        errors={errors}
                                     />
                                 </div>
                                 <div className="lg:col-span-1">
