@@ -13,7 +13,9 @@ import { components, MultiValueGenericProps, OptionProps } from 'react-select'
 import {
     toggleNewCategoriaDialog,
     useAppDispatch,
-    useAppSelector
+    useAppSelector,
+    insertCategoria,
+    getCategorie
 } from '../store'
 import cloneDeep from 'lodash/cloneDeep'
 import * as Yup from 'yup'
@@ -39,9 +41,9 @@ const NewProjectForm = () => {
     //     dispatch(getMembers())
     // }, [dispatch])
 
-    const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.venditeTabelle.data.tableData
-    )
+    // const { pageIndex, pageSize, sort, query, total } = useAppSelector(
+    //     (state) => state.venditeTabelle.data.tableData
+    // )
 
     const onSubmit = (
         formValue: FormModel,
@@ -56,8 +58,9 @@ const NewProjectForm = () => {
             descrizione
         }
 
-        //dispatch(insertOperatore(values))
+        dispatch(insertCategoria(values))
         dispatch(toggleNewCategoriaDialog(false))
+        dispatch(getCategorie())
         //dispatch(getOperatori({ pageIndex, pageSize, sort, query }))
         
         toast.push(

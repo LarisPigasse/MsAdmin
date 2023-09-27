@@ -8,8 +8,11 @@ import {
     apiInsertOperatore,
     apiGetSistemaOperatori,
     apiDeleteSistemaOperatori,
-    apiGetSistemaCategorie
+    apiInsertCategoria
 } from '@/services/SistemaService'
+
+import { apiGetCategorie } from '@/services/CategorieSottocategorieService';
+
 import type { TableQueries } from '@/@types/common'
 
 type Categoria = {
@@ -40,9 +43,17 @@ export const SLICE_NAME = 'venditeTabelle'
 
 export const getCategorie = createAsyncThunk(
     SLICE_NAME + '/getCategorie',
-    async (data: TableQueries) => {
-        const response = await apiGetSistemaCategorie(data)
+    async () => {
+        const response = await apiGetCategorie<[]>()
         console.log(response)
+        return response.data || []
+    }
+)
+
+export const insertCategoria = createAsyncThunk(
+    SLICE_NAME + '/insertCategoria',
+    async (data : any) => {
+        const response = await apiInsertCategoria(data)
         return response.data
     }
 )
@@ -143,15 +154,14 @@ const tabellaSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        // builder
-        //     .addCase(getOperatori.fulfilled, (state, action) => {
-        //         state.operatori = action.payload.data
-        //         state.tableData.total = action.payload.total
-        //         state.loading = false
-        //     })
-        //     .addCase(getOperatori.pending, (state) => {
-        //         state.loading = true
-        //     })
+        builder
+            .addCase(getCategorie.fulfilled, (state, action) => {
+                state.categorie = action.payload
+                state.loading = false
+            })
+            .addCase(getCategorie.pending, (state) => {
+                state.loading = true
+            })
     },
 })
 

@@ -1,5 +1,5 @@
 
-import { useMemo, Fragment, useEffect, useState } from 'react'
+import { useMemo, Fragment, useEffect, useState, useCallback } from 'react'
 import {Table, Button} from '@/components/ui'
 import { HiDownload } from 'react-icons/hi'
 import {
@@ -19,6 +19,7 @@ import NewCategorieDialog from './NewCategorieDialog';
 
 import {
     useAppDispatch,
+    getCategorie,
     useAppSelector,
     toggleNewCategoriaDialog
 } from '../store'
@@ -139,7 +140,7 @@ const { Tr, Th, Td, THead, TBody } = Table
 
 function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<Categoria>) {
     
-    const [categorie, setCategorie] = useState([]);
+    const categorie = useAppSelector((state) => state.venditeTabelle.data.categorie)
 
     const columns = useMemo<ColumnDef<Categoria>[]>(
         () => [
@@ -186,16 +187,27 @@ function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<
         []
     )
 
-    const getCategorie = async () => {
-        let a = await apiGetCategorie();
-        let res : any = await a.data;
-        console.log(res)
-        setCategorie(res);
-    }
+    const dispatch = useAppDispatch()
+
+    const fetchData = useCallback(() => {
+        dispatch(getCategorie())
+    }, [])
 
     useEffect(() => {
-        getCategorie();
-    }, [])
+        fetchData()
+    }, [dispatch, fetchData])
+
+
+    // const getCategorie = async () => {
+    //     let a = await apiGetCategorie();
+    //     let res : any = await a.data;
+    //     console.log(res)
+    //     setCategorie(res);
+    // }
+
+    // useEffect(() => {
+    //     //getCategorie();
+    // }, [])
     
     const table = useReactTable({
         data: categorie,

@@ -71,3 +71,10 @@ export async function apiGetCategorieFilter<T, U extends Record<string, unknown>
     })
 }
 
+export async function apiInsertCategoria(data: any) {
+    return ApiService.fetchData({
+        url: '/categorie/',
+        method: 'post',
+        data,
+    })
+}
