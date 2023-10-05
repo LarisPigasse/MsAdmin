@@ -1,7 +1,10 @@
 
 import { useMemo, Fragment, useEffect, useState, useCallback } from 'react'
+import Tooltip from '@/components/ui/Tooltip'
+import { HiOutlineEye, HiOutlineTrash, HiPlusCircle } from 'react-icons/hi'
 import {Table, Button} from '@/components/ui'
 import { HiDownload } from 'react-icons/hi'
+import { useNavigate } from 'react-router-dom'
 import {
     useReactTable,
     getCoreRowModel,
@@ -10,18 +13,22 @@ import {
 } from '@tanstack/react-table'
 import SottocategorieTable from './SottocategorieTable';
 import { apiGetCategorie } from '@/services/CategorieSottocategorieService';
-
+import useThemeClass from '@/utils/hooks/useThemeClass'
 import { HiOutlineChevronRight, HiOutlineChevronDown } from 'react-icons/hi'
 import type { ColumnDef, Row } from '@tanstack/react-table'
 import type { ReactElement } from 'react'
 
 import NewCategorieDialog from './NewCategorieDialog';
+import NewSottocategoriaDialog from './NewSottocategoriaDialog';
 
 import {
     useAppDispatch,
     getCategorie,
     useAppSelector,
-    toggleNewCategoriaDialog
+    toggleNewCategoriaDialog,
+    toggleNewSottocategoriaDialog,
+    setDatiCategoria,
+    setIdCategoria
 } from '../store'
 
 
@@ -46,95 +53,55 @@ type Categoria = {
     subRows?: Sottocategoria[]
 }
 
-const Categorie: Categoria[] = [
-    {
-        id_categoria: 1,
-        categoria: 'Abbigliamento Man',
-        descrizione: 'Abbigliamento uomo',
-        stato: 'ATTIVO',
-        subRows: [
-            {
-                id_categoria: 1,
-                id_sottocategoria: 1,
-                sottocategoria: 'T-shirt',
-                descrizione: 'T-shirt, polo e magliette',
-                stato: 'ATTIVO',
-            },
-            {
-                id_categoria: 1,
-                id_sottocategoria: 2,
-                sottocategoria: 'Felpa',
-                descrizione: 'Felpe',
-                stato: 'ATTIVO',
-            },
-            {
-                id_categoria: 1,
-                id_sottocategoria: 3,
-                sottocategoria: 'Altro',
-                descrizione: 'Pantaloni, camicie',
-                stato: 'ATTIVO',
-            },          
-        ],
-    },
-    {
-        id_categoria: 2,
-        categoria: 'Abbigliamento Woman',
-        descrizione: 'Abbigliamento donna',
-        stato: 'ATTIVO',
-        subRows: [
-            {
-                id_categoria: 2,
-                id_sottocategoria: 1,
-                sottocategoria: 'T-shirt',
-                descrizione: 'T-shirt, polo e magliette',
-                stato: 'ATTIVO',
-            },
-            {
-                id_categoria: 2,
-                id_sottocategoria: 2,
-                sottocategoria: 'Felpa',
-                descrizione: 'Felpe',
-                stato: 'ATTIVO',
-            },
-            {
-                id_categoria: 2,
-                id_sottocategoria: 3,
-                sottocategoria: 'Altro',
-                descrizione: 'Pantaloni, camicie, gonne',
-                stato: 'ATTIVO',
-            },          
-        ],
-    },
-    {
-        id_categoria: 2,
-        categoria: 'Abbigliamento Kid',
-        descrizione: 'Abbigliamento bambini',
-        stato: 'ATTIVO',
-        subRows: [
-            {
-                id_categoria: 3,
-                id_sottocategoria: 1,
-                sottocategoria: 'T-shirt',
-                descrizione: 'T-shirt, polo e magliette',
-                stato: 'ATTIVO',
-            },
-            {
-                id_categoria: 3,
-                id_sottocategoria: 2,
-                sottocategoria: 'Felpa',
-                descrizione: 'Felpe',
-                stato: 'ATTIVO',
-            },
-            {
-                id_categoria: 3,
-                id_sottocategoria: 3,
-                sottocategoria: 'Altro',
-                descrizione: 'Pantaloni, camicie, gonne, cappellini',
-                stato: 'ATTIVO',
-            },          
-        ],
-    },    
-]
+const ActionColumn = ({row} : { row: any}) => {
+    const dispatch = useAppDispatch()
+    const { textTheme } = useThemeClass()
+    const navigate = useNavigate()
+
+    const onDelete = () => {
+    //     // dispatch(setDeleteMode('single'))
+    //     // dispatch(setSelectedRow([row.id_operatore]))
+    }
+
+    const onView = useCallback(() => {
+        dispatch(setDatiCategoria(row))
+        dispatch(toggleNewCategoriaDialog(true))
+    }, [row])
+
+    const onAddSottocategoria = useCallback(() => {
+        dispatch(setIdCategoria(row.id_categoria))
+        dispatch(toggleNewSottocategoriaDialog(true))
+    }, [row])
+
+    return (
+        <div className="flex justify-end text-lg">
+            <Tooltip title="Aggiungi sottocategoria">
+                <span
+                    className={`cursor-pointer p-2 hover:${textTheme}`}
+                    onClick={onAddSottocategoria}
+                >
+                    <HiPlusCircle />
+                </span>
+            </Tooltip>
+            <Tooltip title="View">
+                <span
+                    className={`cursor-pointer p-2 hover:${textTheme}`}
+                    onClick={onView}
+                >
+                    <HiOutlineEye />
+                </span>
+            </Tooltip>
+            <Tooltip title="Delete">
+                <span
+                    className="cursor-pointer p-2 hover:text-red-500"
+                    onClick={onDelete}
+                >
+                    <HiOutlineTrash />
+                </span>
+            </Tooltip>
+        </div>
+    )
+}
 
 const { Tr, Th, Td, THead, TBody } = Table
 
@@ -183,6 +150,11 @@ function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<
                 header: 'Stato',
                 accessorKey: 'stato',
             },
+            {
+                header: '',
+                id: 'action',
+                cell: (props) => <ActionColumn row={props.row.original} />,
+            },
         ],
         []
     )
@@ -196,7 +168,6 @@ function ReactTable({ renderRowSubComponent, getRowCanExpand }: ReactTableProps<
     useEffect(() => {
         fetchData()
     }, [dispatch, fetchData])
-
 
     // const getCategorie = async () => {
     //     let a = await apiGetCategorie();
@@ -288,12 +259,17 @@ const CategorieTable = () => {
     const dispatch = useAppDispatch()
 
     const onAddCategorie = () => {
+        dispatch(setDatiCategoria( { categoria: '',
+        descrizione: '',
+        uuid_categoria:''
+    }))
         dispatch(toggleNewCategoriaDialog(true))
     }
 
     return (
         <>
             <NewCategorieDialog />
+            <NewSottocategoriaDialog />
             <div className='font-bold mb-4'>
                 Categorie e sottocategorie
 

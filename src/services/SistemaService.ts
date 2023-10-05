@@ -78,3 +78,36 @@ export async function apiInsertCategoria(data: any) {
         data,
     })
 }
+
+export async function apiInsertSottocategoria(data: any) {
+    return ApiService.fetchData({
+        url: '/sottocategorie/',
+        method: 'post',
+        data,
+    })
+}
+
+export async function apiUpdateSottocategoria(data: any) {
+
+    return ApiService.fetchData({
+        url: `/sottocategorie/${data.id_categoria}/${data.id_sottocategoria}`,
+        method: 'put',
+        data,
+    })
+}
+
+export async function apiUpdateCategoria(data: any) {
+
+    return ApiService.fetchData({
+        url: `/categorie/${data.uuid_categoria}`,
+        method: 'put',
+        data,
+    })
+}
+
+export async function apiGetOneCategoria(data: any) {
+    return ApiService.fetchData({
+        url: `/categorie/${data}`,
+        method: 'get',
+    })
+}

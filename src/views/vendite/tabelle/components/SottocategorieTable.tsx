@@ -1,5 +1,7 @@
 
-import { useMemo, Fragment, useEffect, useState } from 'react'
+import { useMemo, Fragment, useEffect, useState, ReactElement, useCallback } from 'react'
+
+import Tooltip from '@/components/ui/Tooltip'
 import Table from '@/components/ui/Table'
 import {
     useReactTable,
@@ -7,12 +9,18 @@ import {
     getExpandedRowModel,
     flexRender,
 } from '@tanstack/react-table'
-
+import useThemeClass from '@/utils/hooks/useThemeClass'
 import { apiGetSottocategorie } from '@/services/CategorieSottocategorieService';
 
-import { HiOutlineChevronRight, HiOutlineChevronDown } from 'react-icons/hi'
+import { HiOutlineChevronRight, HiOutlineChevronDown, HiOutlineEye, HiOutlineTrash } from 'react-icons/hi'
 import type { ColumnDef, Row } from '@tanstack/react-table'
-import type { ReactElement } from 'react'
+
+import {
+    useAppDispatch,
+    toggleNewSottocategoriaDialog,
+    useAppSelector,
+    setDatiSottocategoria
+} from '../store'
 
 type ReactTableProps<T> = {
     getRowCanExpand: (row: Row<T>) => boolean
@@ -27,14 +35,42 @@ type Sottocategoria = {
     stato: string
 }
 
-type Categoria = {
-    id_categoria: number
-    categoria: string
-    descrizione: string
-    stato: string
-    subRows?: Sottocategoria[]
-}
+const ActionColumn = ({row} : { row: any}) => {
+    const dispatch = useAppDispatch()
+    const { textTheme } = useThemeClass()
+    //const navigate = useNavigate()
 
+    const onDelete = () => {
+    //     // dispatch(setDeleteMode('single'))
+    //     // dispatch(setSelectedRow([row.id_operatore]))
+    }
+
+    const onView = useCallback(() => {
+        dispatch(setDatiSottocategoria(row))
+        dispatch(toggleNewSottocategoriaDialog(true))
+    }, [row])
+
+    return (
+        <div className="flex justify-end text-lg">
+            <Tooltip title="View">
+                <span
+                    className={`cursor-pointer p-2 hover:${textTheme}`}
+                    onClick={onView}
+                >
+                    <HiOutlineEye />
+                </span>
+            </Tooltip>
+            <Tooltip title="Delete">
+                <span
+                    className="cursor-pointer p-2 hover:text-red-500"
+                    onClick={onDelete}
+                >
+                    <HiOutlineTrash />
+                </span>
+            </Tooltip>
+        </div>
+    )
+}
 
 const { Tr, Th, Td, THead, TBody } = Table
 
@@ -56,6 +92,11 @@ function ReactTable({ getRowCanExpand, data }: ReactTableProps<Sottocategoria>) 
             {
                 header: 'Stato',
                 accessorKey: 'stato',
+            },
+            {
+                header: '',
+                id: 'action',
+                cell: (props) => <ActionColumn row={props.row.original} />,
             },
         ],
         []
@@ -128,10 +169,13 @@ function ReactTable({ getRowCanExpand, data }: ReactTableProps<Sottocategoria>) 
     )
 }
 
-const SottocategorieTable = (data: any) => {
+const SottocategorieTable = ({data} : any) => {
+
 
     const [sottocategorie, setSottocategorie] = useState([])
 
+    const dispatch = useAppDispatch()
+    //const sottocategorie = useAppSelector((state) => state.venditeTabelle.data.sottocategorie)
     // const getSottocategorie = async () => {
     //     let a = await apiGetSottocategorie();
     //     let res : any = await a.data;
@@ -139,17 +183,25 @@ const SottocategorieTable = (data: any) => {
     //     setSottocategorie(res);
     // }
 
-    const getSottocategorie = async (data : any) => {        
-        const response = await apiGetSottocategorie(data.data)
+    const getSottocategorie = async () => {
+        const response = await apiGetSottocategorie(data)
         let responseData :any = response.data;
         setSottocategorie(responseData);
         return 
     }
 
-    useEffect(() => {
-     
-       getSottocategorie(data)
+    const fetchData = useCallback(() => {
+        getSottocategorie()
+        //dispatch(getSottocategorie(data))
     }, [])
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    // useEffect(() => {
+    //    getSottocategorie(data)
+    // }, [])
 
     return (
         <>

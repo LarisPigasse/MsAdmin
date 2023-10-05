@@ -14,8 +14,8 @@ import {
     toggleNewCategoriaDialog,
     useAppDispatch,
     useAppSelector,
-    insertCategoria,
-    updateCategoria,
+    insertSottocategoria,
+    updateSottocategoria,
     getCategorie
 } from '../store'
 import cloneDeep from 'lodash/cloneDeep'
@@ -23,52 +23,61 @@ import * as Yup from 'yup'
 import { useEffect } from 'react'
 
 type FormModel = {
-    categoria: string
+    sottocategoria: string
     descrizione: string
-    uuid_categoria: string
+    id_sottocategoria: number | null
     id_categoria: number | null
 }
 
 const validationSchema = Yup.object().shape({
-    categoria: Yup.string().min(3, 'Too Short!').required('Title required'),
+    sottocategoria: Yup.string().min(3, 'Too Short!').required('Title required'),
     descrizione: Yup.string().required('Title required')
 })
 
-const NewCategorieForm = () => {
+const NewSottocategorieForm = () => {
     const dispatch = useAppDispatch()
 
-   // const members = useAppSelector((state) => state.projectList.data.allMembers)
-
-    const datiCategoria = useAppSelector(
-        (state) => state.venditeTabelle.data.datiCategoria
+    const id_categoria = useAppSelector(
+        (state) => state.venditeTabelle.data.id_categoria
     )
-    
+
+    const datiSottocategoria = useAppSelector(
+        (state) => state.venditeTabelle.data.datiSottocategoria
+    )
 
     const onSubmit = (
         formValue: FormModel,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
         setSubmitting(true)
-        const { categoria, descrizione, id_categoria, uuid_categoria } = formValue
+        const { sottocategoria, descrizione,id_sottocategoria } = formValue
         
-        let values = {
-            categoria,
-            descrizione,
-            id_categoria, uuid_categoria
-        }
-    
-        if(id_categoria === null){
-            dispatch(insertCategoria(values))
+        if(id_sottocategoria === null){
+            let values = {
+                sottocategoria,
+                descrizione,
+                id_categoria,
+                id_sottocategoria
+            }
+            dispatch(insertSottocategoria(values))
         }else{
-            dispatch(updateCategoria(values))
+            console.log()
+            let values = {
+                sottocategoria,
+                descrizione,
+                id_sottocategoria,
+                id_categoria:formValue.id_categoria,
+            }
+
+            dispatch(updateSottocategoria(values))
         }
         
         dispatch(toggleNewCategoriaDialog(false))
-        dispatch(getCategorie())
+        //dispatch(getCategorie())
         
         toast.push(
             <Notification
-                title="Categoria inserita con successo."
+                title="Sottocategoria inserita con successo."
                 type="success"
                 duration={3500}
             >
@@ -83,10 +92,10 @@ const NewCategorieForm = () => {
     return (
         <Formik
             initialValues={{
-                categoria:datiCategoria.categoria,
-                descrizione:datiCategoria.descrizione,
-                uuid_categoria:datiCategoria.uuid_categoria,
-                id_categoria:datiCategoria.id_categoria
+                sottocategoria:datiSottocategoria.sottocategoria,
+                descrizione:datiSottocategoria.descrizione,
+                id_sottocategoria: datiSottocategoria.id_sottocategoria,
+                id_categoria: datiSottocategoria.id_categoria
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
@@ -98,15 +107,15 @@ const NewCategorieForm = () => {
                     <FormContainer>
                        
                         <FormItem
-                            label="Categoria"
-                            invalid={errors.categoria && touched.categoria}
-                            errorMessage={errors.categoria}
+                            label="Sottocategoria"
+                            invalid={errors.sottocategoria && touched.sottocategoria}
+                            errorMessage={errors.sottocategoria}
                         >
                             <Field
                                 type="text"
                                 autoComplete="off"
-                                name="categoria"
-                                placeholder="Categoria..."
+                                name="sottocategoria"
+                                placeholder="Sottocategoria..."
                                 component={Input}
                             />
                         </FormItem>
@@ -135,4 +144,4 @@ const NewCategorieForm = () => {
     )
 }
 
-export default NewCategorieForm
+export default NewSottocategorieForm

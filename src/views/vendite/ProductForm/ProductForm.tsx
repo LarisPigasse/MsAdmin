@@ -36,6 +36,12 @@ type InitialData = {
     prezzo_offerta?: number,
     prezzo_minimo?: number,
     note?: string
+    img?: string
+    imgList?: {
+        id: string
+        name: string
+        img: string
+    }[]
 }
 
 export type FormModel = Omit<InitialData, 'tags'> & {
@@ -122,6 +128,8 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
             tags: '',
             codice: 0,
             sku: 0,
+            img: '',
+            imgList: [],
             id_categoria: 0,
             id_sottocategoria: 0,
             id_produttore: 0,
@@ -194,7 +202,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                     />
                                 </div>
                                 <div className="lg:col-span-1">
-                                    {/* <ProductImages values={values} /> */}
+                                    <ProductImages values={values} />
                                 </div>
                             </div>
                             <StickyFooter
