@@ -4,7 +4,7 @@ import Button from '@/components/ui/Button'
 import hooks from '@/components/ui/hooks'
 import StickyFooter from '@/components/shared/StickyFooter'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
-import { Form, Formik, FormikProps } from 'formik'
+import { Form, Formik, FormikProps, Field } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
 import PricingFields from './PricingFields'
 import OrganizationFields from './OrganizationFields'
@@ -18,7 +18,8 @@ import * as Yup from 'yup'
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 type FormikRef = FormikProps<any>
 
-type InitialData = {    
+type InitialData = {
+    file?: string | null ,
     uuid_prodotto?: string,
     prodotto?: string,
     descrizione?: string,
@@ -59,7 +60,7 @@ type ProductForm = {
     type: 'edit' | 'new'
     onDiscard?: () => void
     onDelete?: OnDelete
-    onFormSubmit: (formData: FormModel, setSubmitting: SetSubmitting) => void
+    onFormSubmit: (formData: any, setSubmitting: SetSubmitting) => void
 }
 
 const { useUniqueId } = hooks
@@ -120,10 +121,11 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
     const {
         type,
         initialData = {
+            file:[],
             uuid_prodotto: '',
-            prodotto: '',
-            descrizione: '',
-            scheda: '',
+            prodotto: '123',
+            descrizione: '123',
+            scheda: '123',
             tipo: '',
             tags: '',
             codice: 0,
@@ -145,8 +147,6 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
         onDelete,
     } = props
 
-    const newId = useUniqueId('product-')
-
     return (
         <>
             <Formik
@@ -161,26 +161,48 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                     //     : [],
                 }}
                 validationSchema={validationSchema}
-                onSubmit={(values: FormModel, { setSubmitting }) => {
+                onSubmit={(values: any, { setSubmitting }) => {
                     const formData = cloneDeep(values)
+
+                    let dati : any = new FormData();
+                    for (const [key, value] of Object.entries(values)) {
+                        dati.append(key, value);
+                    }
+
+                    let _files = values.file;
+
+                    for (let i = 0; i < _files.length; i++) {
+                        dati.append(`file[]`, _files[i]);
+                    }
+
+                    // values.imgList.forEach((file : any, index : any) => {
+
+                    //     const blob = new Blob([JSON.stringify(file)], { type: 'application/json' });
+
+                    //     dati.append(`file[]`, blob);
+
+                    //     console.log(blob)
+                    // });
+
                     // formData.tags = formData.tags.map((tag) => {
                     //     if (typeof tag !== 'string') {
                     //         return tag.value
                     //     }
                     //     return tag
                     // })
-                    // if (type === 'new') {
-                    //     formData.id = newId
-                    //     if (formData.imgList && formData.imgList.length > 0) {
-                    //         formData.img = formData.imgList[0].img
-                    //     }
-                    // }
-                    onFormSubmit?.(formData, setSubmitting)
+                    if (type === 'new') {
+                        //formData.id = newId
+                        if (formData.imgList && formData.imgList.length > 0) {
+                            formData.img = formData.imgList[0].img
+                        }
+                    }
+                    onFormSubmit?.(dati, setSubmitting)
                 }}
             >
-                {({ values, touched, errors, isSubmitting }) => (
-                    <Form>
+                {({ values, touched, errors, isSubmitting, handleChange, setFieldValue }) => (
+                    <Form encType="multipart/form-data" >
                         <FormContainer>
+
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                                 <div className="lg:col-span-2">
                                     <BasicInformationFields

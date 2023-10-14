@@ -8,6 +8,7 @@ export async function tabellaProdotti<T, U extends Record<string, unknown>>(
         url: '/prodotti/prodotti-filter',
         method: 'post',
         data,
+        
     })
 }
 
@@ -18,7 +19,7 @@ export async function insertProdotto<
     return ApiService.fetchData<T>({
         url: '/prodotti',
         method: 'post',
-        data,
+        data
     })
 }
 

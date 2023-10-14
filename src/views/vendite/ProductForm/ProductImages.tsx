@@ -17,6 +17,7 @@ type Image = {
 
 type FormModel = {
     imgList: Image[]
+    file : []
     [key: string]: unknown
 }
 
@@ -148,8 +149,10 @@ const ProductImages = (props: ProductImagesProps) => {
         field: FieldInputProps<FormModel>,
         files: File[]
     ) => {
+     
         let imageId = '1-img-0'
         const latestUpload = files.length - 1
+
         if (values.imgList.length > 0) {
             const prevImgId = values.imgList[values.imgList.length - 1].id
             const splitImgId = prevImgId.split('-')
@@ -158,14 +161,17 @@ const ProductImages = (props: ProductImagesProps) => {
             const newIdArr = [...splitImgId, ...[newIdNumber]]
             imageId = newIdArr.join('-')
         }
+
         const image = {
             id: imageId,
             name: files[latestUpload].name,
             img: URL.createObjectURL(files[latestUpload]),
         }
         const imageList = [...values.imgList, ...[image]]
-        console.log('imageList', imageList)
+        const fileList = [...values.file, ...files]
+
         form.setFieldValue(field.name, imageList)
+        form.setFieldValue('file', fileList)
     }
 
     const handleImageDelete = (
@@ -176,6 +182,7 @@ const ProductImages = (props: ProductImagesProps) => {
         let imgList = cloneDeep(values.imgList)
         imgList = imgList.filter((img) => img.id !== deletedImg.id)
         form.setFieldValue(field.name, imgList)
+
     }
 
     return (
@@ -183,7 +190,7 @@ const ProductImages = (props: ProductImagesProps) => {
             <h5>Immagini del prodotto</h5>
             <p className="mb-6">Aggiungi o modifica le immagini del prodotto</p>
             <FormItem>
-                <Field name="imgList">
+                <Field type="file" name="imgList">
                     {({ field, form }: FieldProps) => {
                         if (values.imgList.length > 0) {
                             return (
@@ -196,6 +203,7 @@ const ProductImages = (props: ProductImagesProps) => {
                                     />
                                     <Upload
                                         draggable
+                                        multiple
                                         className="min-h-fit"
                                         beforeUpload={beforeUpload}
                                         showList={false}

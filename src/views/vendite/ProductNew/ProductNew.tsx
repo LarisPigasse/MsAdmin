@@ -11,12 +11,12 @@ const ProductNew = () => {
     const navigate = useNavigate()
 
     const addProduct = async (data: FormModel) => {
-        const response = await insertProdotto<boolean, FormModel>(data)
+        const response = await insertProdotto<boolean, any>(data)
         return response.data
     }
 
     const handleFormSubmit = async (
-        values: FormModel,
+        values: any,
         setSubmitting: SetSubmitting
     ) => {
         setSubmitting(true)
