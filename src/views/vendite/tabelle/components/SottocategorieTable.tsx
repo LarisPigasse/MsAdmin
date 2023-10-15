@@ -19,7 +19,8 @@ import {
     useAppDispatch,
     toggleNewSottocategoriaDialog,
     useAppSelector,
-    setDatiSottocategoria
+    setDatiSottocategoria,
+    getSottocategorie
 } from '../store'
 
 type ReactTableProps<T> = {
@@ -171,11 +172,13 @@ function ReactTable({ getRowCanExpand, data }: ReactTableProps<Sottocategoria>) 
 
 const SottocategorieTable = ({data} : any) => {
 
-
-    const [sottocategorie, setSottocategorie] = useState([])
+    //const [sottocategorie, setSottocategorie] = useState([])
 
     const dispatch = useAppDispatch()
-    //const sottocategorie = useAppSelector((state) => state.venditeTabelle.data.sottocategorie)
+    const sottocategorie = useAppSelector((state) => state.venditeTabelle.data.sottocategorie)
+    const id_categoria = useAppSelector((state) => state.venditeTabelle.data.id_categoria)
+    const datiSottocategoria = useAppSelector((state) => state.venditeTabelle.data.datiSottocategoria)
+
     // const getSottocategorie = async () => {
     //     let a = await apiGetSottocategorie();
     //     let res : any = await a.data;
@@ -183,25 +186,24 @@ const SottocategorieTable = ({data} : any) => {
     //     setSottocategorie(res);
     // }
 
-    const getSottocategorie = async () => {
-        const response = await apiGetSottocategorie(data)
-        let responseData :any = response.data;
-        setSottocategorie(responseData);
-        return 
-    }
+    // const getSottocategorie = async () => {
+    //     const response = await apiGetSottocategorie(data)
+    //     let responseData :any = response.data;
+    //     setSottocategorie(responseData);
+    //     return 
+    // }
 
     const fetchData = useCallback(() => {
-        getSottocategorie()
-        //dispatch(getSottocategorie(data))
+        //getSottocategorie()
+        dispatch(getSottocategorie(data))
     }, [])
 
     useEffect(() => {
         fetchData()
     }, [])
 
-    // useEffect(() => {
-    //    getSottocategorie(data)
-    // }, [])
+
+
 
     return (
         <>

@@ -17,19 +17,19 @@ const Tabelle = () => {
             <Tabs defaultValue="tabCategorie">
                 <TabList>
                     <TabNav value="tabCategorie">Categorie</TabNav>
-                    <TabNav value="tabVarianti">Varianti</TabNav>
-                    <TabNav value="tabAliquote">Aliquote</TabNav>
+                    {/* <TabNav value="tabVarianti">Varianti</TabNav>
+                    <TabNav value="tabAliquote">Aliquote</TabNav> */}
                 </TabList>
                 <div className="p-4">
                     <TabContent value="tabCategorie">
                         <CategorieTable/>
                     </TabContent>
-                    <TabContent value="tabVarianti">
+                    {/* <TabContent value="tabVarianti">
                         <VariantiTable/>
                     </TabContent>
                     <TabContent value="tabAliquote">
                         <AliquoteTable/>
-                    </TabContent>
+                    </TabContent> */}
                 </div>
             </Tabs>
         </div>

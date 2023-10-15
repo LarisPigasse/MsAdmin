@@ -42,7 +42,7 @@ function useAuth() {
                 if (resp.data) {
                     dispatch(
                         setUser(
-                            {...resp.data,
+                            {...resp.data.utente,
                                 authority: ['USER'],
                                 avatar:''
                             } || {

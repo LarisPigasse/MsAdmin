@@ -68,7 +68,6 @@ export const getCategorie = createAsyncThunk(
     }
 )
 
-
 export const getSottocategorie = createAsyncThunk(
     SLICE_NAME + '/getSottocategorie',
     async (data : any) => {
@@ -77,8 +76,6 @@ export const getSottocategorie = createAsyncThunk(
         return response.data || []
     }
 )
-
-
 
 export const insertSottocategoria = createAsyncThunk(
     SLICE_NAME + '/insertSottocategoria',

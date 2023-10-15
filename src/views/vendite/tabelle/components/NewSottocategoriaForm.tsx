@@ -11,12 +11,13 @@ import { Field, Form, Formik, FieldProps } from 'formik'
 import { HiCheck } from 'react-icons/hi'
 import { components, MultiValueGenericProps, OptionProps } from 'react-select'
 import {
-    toggleNewCategoriaDialog,
+    toggleNewSottocategoriaDialog,
     useAppDispatch,
     useAppSelector,
     insertSottocategoria,
     updateSottocategoria,
-    getCategorie
+    getSottocategorie,
+    setIdCategoria
 } from '../store'
 import cloneDeep from 'lodash/cloneDeep'
 import * as Yup from 'yup'
@@ -37,7 +38,7 @@ const validationSchema = Yup.object().shape({
 const NewSottocategorieForm = () => {
     const dispatch = useAppDispatch()
 
-    const id_categoria = useAppSelector(
+    let id_categoria = useAppSelector(
         (state) => state.venditeTabelle.data.id_categoria
     )
 
@@ -61,20 +62,22 @@ const NewSottocategorieForm = () => {
             }
             dispatch(insertSottocategoria(values))
         }else{
-            console.log()
+            id_categoria = formValue.id_categoria
             let values = {
                 sottocategoria,
                 descrizione,
                 id_sottocategoria,
-                id_categoria:formValue.id_categoria,
+                id_categoria,
             }
 
             dispatch(updateSottocategoria(values))
         }
         
-        dispatch(toggleNewCategoriaDialog(false))
-        //dispatch(getCategorie())
+        setTimeout(() => {
+            dispatch(getSottocategorie(id_categoria))
+        }, 128);
         
+        dispatch(toggleNewSottocategoriaDialog(false))
         toast.push(
             <Notification
                 title="Sottocategoria inserita con successo."
