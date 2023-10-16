@@ -149,6 +149,8 @@ const ProductImages = (props: ProductImagesProps) => {
         field: FieldInputProps<FormModel>,
         files: File[]
     ) => {
+
+        console.log(values.file)
      
         let imageId = '1-img-0'
         const latestUpload = files.length - 1
@@ -168,6 +170,7 @@ const ProductImages = (props: ProductImagesProps) => {
             img: URL.createObjectURL(files[latestUpload]),
         }
         const imageList = [...values.imgList, ...[image]]
+
         const fileList = [...values.file, ...files]
 
         form.setFieldValue(field.name, imageList)
@@ -179,10 +182,15 @@ const ProductImages = (props: ProductImagesProps) => {
         field: FieldInputProps<FormModel>,
         deletedImg: Image
     ) => {
+        let index : any = deletedImg.id.split('-')[2];
+
+        let newFiles = values.file;
+        newFiles.splice(index,1)
+
         let imgList = cloneDeep(values.imgList)
         imgList = imgList.filter((img) => img.id !== deletedImg.id)
         form.setFieldValue(field.name, imgList)
-
+        form.setFieldValue('file', newFiles)
     }
 
     return (

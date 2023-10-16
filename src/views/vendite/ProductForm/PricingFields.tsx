@@ -66,6 +66,39 @@ const PricingFields = (props: PricingFieldsProps) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
+                        label="Sku"
+                        invalid={(errors.sku && touched.sku) as boolean}
+                        errorMessage={errors.sku}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="sku"
+                            placeholder="sku"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
+                <div className="col-span-1">
+                    <FormItem
+                        label="Scheda"
+                        invalid={(errors.scheda && touched.scheda) as boolean}
+                        errorMessage={errors.scheda}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="scheda"
+                            placeholder="scheda"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <div className="col-span-1 hidden">
+                    <FormItem
                         label="Tipo"
                         invalid={(errors.tipo && touched.tipo) as boolean}
                         errorMessage={errors.tipo}
@@ -92,39 +125,7 @@ const PricingFields = (props: PricingFieldsProps) => {
                         </Field>
                     </FormItem>
                 </div>
-                <div className="col-span-1">
-                    <FormItem
-                        label="Scheda"
-                        invalid={(errors.scheda && touched.scheda) as boolean}
-                        errorMessage={errors.scheda}
-                    >
-                        <Field
-                            type="text"
-                            autoComplete="off"
-                            name="scheda"
-                            placeholder="scheda"
-                            component={Input}
-                        />
-                    </FormItem>
-                </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="col-span-1">
-                    <FormItem
-                        label="Sku"
-                        invalid={(errors.sku && touched.sku) as boolean}
-                        errorMessage={errors.sku}
-                    >
-                        <Field
-                            type="text"
-                            autoComplete="off"
-                            name="sku"
-                            placeholder="sku"
-                            component={Input}
-                        />
-                    </FormItem>
-                </div>
-                <div className="col-span-1">
+                <div className="col-span-1 hidden">
                     <FormItem
                         label="stato"
                         invalid={(errors.stato && touched.stato) as boolean}

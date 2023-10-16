@@ -123,9 +123,9 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
         initialData = {
             file:[],
             uuid_prodotto: '',
-            prodotto: '123',
-            descrizione: '123',
-            scheda: '123',
+            prodotto: '',
+            descrizione: '',
+            scheda: '',
             tipo: '',
             tags: '',
             codice: 0,
@@ -169,10 +169,12 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                         dati.append(key, value);
                     }
 
-                    let _files = values.file;
+                    let _files = values?.file ?? 0 ;
 
-                    for (let i = 0; i < _files.length; i++) {
-                        dati.append(`file[]`, _files[i]);
+                    if(_files.length>0){
+                        for (let i = 0; i < _files.length; i++) {
+                            dati.append(`file[]`, _files[i]);
+                        }
                     }
 
                     // values.imgList.forEach((file : any, index : any) => {

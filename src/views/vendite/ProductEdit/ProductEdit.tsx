@@ -40,11 +40,10 @@ const ProductEdit = () => {
     }
 
     const handleFormSubmit = async (
-        values: FormModel,
+        values: any,
         setSubmitting: SetSubmitting
     ) => {
         setSubmitting(true)
-        console.log(values)
         const success = await updateProdotti(values)
         setSubmitting(false)
         if (success) {

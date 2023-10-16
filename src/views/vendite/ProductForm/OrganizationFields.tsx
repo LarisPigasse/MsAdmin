@@ -72,7 +72,6 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
         let _sottocat = await data.map(
             (sottocat : any) => ( { label : sottocat.sottocategoria, value: sottocat.id_sottocategoria} )
         )
-            console.log(_sottocat)
         setSottocategorie(_sottocat)
     }
 
@@ -157,7 +156,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                     </FormItem>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="hidden grid grid-cols-1 md:grid-cols-2 gap-4 ">
                 <div className="col-span-1">
                     <FormItem
                         label="Produttore"

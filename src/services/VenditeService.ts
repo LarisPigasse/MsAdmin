@@ -63,10 +63,12 @@ export async function getProdotti<T, U extends Record<string, unknown>>(
 }
 
 export async function apiUpdateProdotti<T, U extends Record<string, unknown>>(
-    data: U
+    data: any
 ) {
+    let uuid_prodotto : any = data.get('uuid_prodotto')
+ 
     return ApiService.fetchData<T>({
-        url: `/prodotti/${data.uuid_prodotto}`,
+        url: `/prodotti/${uuid_prodotto}`,
         method: 'put',
         data
     })
